@@ -58,7 +58,7 @@ let newGame = "si";
 
 alert("Bienvenido a la mesa de Blackjack")
 
-while (newGame === "si") {
+while (newGame.toLowerCase() === "si") {
     jugar();
     newGame = prompt("¿Quiere volver a jugar?")
 }
