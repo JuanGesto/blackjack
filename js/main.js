@@ -1,3 +1,26 @@
+var mazo;
+
+function armarMazo() {
+    const palos = ["C","D","H","S"];
+    const valores = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
+    mazo = []
+
+    for (let i = 0; i < palos.length; i++) {
+        for (let j = 0; j < valores.length; j++) {
+            mazo.push(valores[j] + "-" + palos[i]);
+        }
+    }
+}
+
+function mezclarMazo() {
+    for (let i = 0; i < mazo.length; i++) {
+        let j = Math.floor(Math.random() * mazo.length);
+        let temp = mazo[i];
+        mazo[i] =  mazo [j];
+        mazo[j] = temp;
+    }
+}
+
 
 function jugar() {
 
@@ -60,5 +83,5 @@ alert("Bienvenido a la mesa de Blackjack")
     
 while (newGame.toLowerCase() === "si") {
     jugar();
-    newGame = prompt("¿Quiere volver a jugar?")
+    newGame = prompt("¿Quiere volver a jugar? (Si o no)")
 }
