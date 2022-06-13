@@ -1,4 +1,8 @@
+var puntosCasa = 0;
+var puntosJugador = 0;
+var back;
 var mazo;
+var canHit = true;
 
 function armarMazo() {
     const palos = ["C","D","H","S"];
@@ -16,13 +20,45 @@ function mezclarMazo() {
     for (let i = 0; i < mazo.length; i++) {
         let j = Math.floor(Math.random() * mazo.length);
         let temp = mazo[i];
-        mazo[i] =  mazo [j];
+        mazo[i] =  mazo[j];
         mazo[j] = temp;
     }
 }
 
+function getValor(carta, puntos) {
+    let valorCarta = carta.split("-");
+    let valor = valorCarta[0];
+
+    if (isNaN(valor)) {
+        if (valor == "A" && puntos < 11) {
+            return 11;
+        }
+        else if (valor == "A" && puntos > 10) {
+            return 1;
+        }
+        else {
+            return 10;
+        }
+    }
+        return parseInt(valor);
+}
 
 function jugar() {
+    carta = mazo.shift();
+    puntosJugador += getValor(carta, puntosJugador);
+
+    carta = mazo.shift();
+    puntosCasa += getValor(carta, puntosCasa);
+
+    carta = mazo.shift();
+    puntosJugador += getValor(carta, puntosJugador);
+
+    back = mazo.shift();
+    puntosCasa += getValor(back, puntosCasa);
+}
+
+
+/* function jugar() {
 
     let carta1 = parseInt(prompt("Ingrese el valor de su primera carta"));
     let carta2 = parseInt(prompt("Ingrese el valor de su segunda carta"));
@@ -85,3 +121,5 @@ while (newGame.toLowerCase() === "si") {
     jugar();
     newGame = prompt("¿Quiere volver a jugar? (Si o no)")
 }
+
+*/
