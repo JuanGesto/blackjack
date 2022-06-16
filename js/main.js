@@ -2,11 +2,14 @@ var puntosCasa = 0;
 var puntosJugador = 0;
 var back;
 var mazo;
-var canHit = true;
+var acesJugador = 0;
+var acesCasa = 0;
+var balance = 1000;
+var apuesta = 0;
 
 function armarMazo() {
-    const palos = ["C","D","H","S"];
-    const valores = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
+    const palos = ["C", "D", "H", "S"];
+    const valores = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
     mazo = []
 
     for (let i = 0; i < palos.length; i++) {
@@ -20,106 +23,166 @@ function mezclarMazo() {
     for (let i = 0; i < mazo.length; i++) {
         let j = Math.floor(Math.random() * mazo.length);
         let temp = mazo[i];
-        mazo[i] =  mazo[j];
+        mazo[i] = mazo[j];
         mazo[j] = temp;
     }
 }
 
-function getValor(carta, puntos) {
+function getValor(carta) {
     let valorCarta = carta.split("-");
     let valor = valorCarta[0];
 
     if (isNaN(valor)) {
-        if (valor == "A" && puntos < 11) {
+        if (valor == "A") {
             return 11;
-        }
-        else if (valor == "A" && puntos > 10) {
-            return 1;
-        }
-        else {
+        } else {
             return 10;
         }
     }
-        return parseInt(valor);
+    return parseInt(valor);
+}
+
+function repartirJugador() {
+    carta = mazo.shift();
+    puntosJugador += getValor(carta);
+
+    cartaImg = document.createElement("img");
+    cartaImg.src = "./media/" + carta + ".png";
+    document.getElementById("cartas-jugador").append(cartaImg);
+
+    if (getValor(carta) == 11) {
+        acesJugador++;
+    }
+    if (puntosJugador > 21 && acesJugador > 0) {
+        puntosJugador -= 10;
+        acesJugador -= 1;
+    }
+}
+
+function repartirCasa() {
+    carta = mazo.shift();
+    puntosCasa += getValor(carta);
+
+    cartaImg = document.createElement("img");
+    cartaImg.src = "./media/" + carta + ".png";
+    document.getElementById("cartas-casa").append(cartaImg);
+
+    if (getValor(carta) == 11) {
+        acesCasa++;
+    }
+    if (puntosCasa > 21 && acesCasa > 0) {
+        puntosCasa -= 10;
+        acesCasa -= 1;
+    }
 }
 
 function jugar() {
-    carta = mazo.shift();
-    puntosJugador += getValor(carta, puntosJugador);
-
-    carta = mazo.shift();
-    puntosCasa += getValor(carta, puntosCasa);
-
-    carta = mazo.shift();
-    puntosJugador += getValor(carta, puntosJugador);
+    repartirJugador();
+    repartirCasa();
+    document.getElementById("puntos-casa").innerText = puntosCasa;
+    repartirJugador();
 
     back = mazo.shift();
-    puntosCasa += getValor(back, puntosCasa);
+    puntosCasa += getValor(back);
+
+    backImg = document.createElement("img");
+    backImg.classList.add("back");
+    backImg.src = "./media/BACK.png";
+    document.getElementById("cartas-casa").append(backImg);
+
+    if (getValor(carta) == 11) {
+        acesCasa++;
+    }
+    
+    document.getElementById("puntos-jugador").innerText = puntosJugador;
+
+    document.querySelector("#pedir").hidden = false;
+    document.querySelector("#parar").hidden = false;
+
+    if (puntosJugador > 20) {
+        parar();
+    }
 }
 
+function pedir() {
+    repartirJugador();
 
-/* function jugar() {
+    if (puntosJugador > 21 && acesJugador > 0) {
+        puntosJugador -= 10;
+        acesJugador -= 1;
+    }
 
-    let carta1 = parseInt(prompt("Ingrese el valor de su primera carta"));
-    let carta2 = parseInt(prompt("Ingrese el valor de su segunda carta"));
-    let puntos = carta1 + carta2;
-    
-    
-    if (puntos === 21) {
-        alert("BLACKJACK!!");
+    document.getElementById("puntos-jugador").innerText = puntosJugador;
+
+    if (puntosJugador > 20) {
+        parar();
+    }
+}
+
+function parar() {
+    document.querySelector("#pedir").hidden = true;
+    document.querySelector("#parar").hidden = true;
+
+    backImg.remove();
+
+    cartaImg = document.createElement("img");
+    cartaImg.src = "./media/" + back + ".png";
+    document.getElementById("cartas-casa").append(cartaImg);
+    document.getElementById("puntos-casa").innerText = puntosCasa;
+
+    while (puntosCasa < 17) {
+        setTimeout(repartirCasa, 100);
+
+        if (puntosCasa > 21 && acesCasa > 0) {
+            puntosCasa -= 10;
+            acesCasa -= 1;
+        }
+
+        document.getElementById("puntos-casa").innerText = puntosCasa;
+    }
+    setTimeout(resultado, 1500);
+}
+
+function resultado() {
+    if (puntosJugador > 21 || (puntosCasa > puntosJugador & puntosCasa < 22)) {
+        alert("La casa gana.");
+        balance -= apuesta;
+    } else if (puntosJugador == puntosCasa) {
+        alert("Es un empate.");
     } else {
-    
-        let sumar = prompt("Sus cartas suman " + puntos + " ¿Quiere otra carta? (Si o no)");
-    
-        while (sumar.toLowerCase() === "si" && puntos < 21) {
-            let cartas = parseInt(prompt("Ingrese el valor de su siguiente carta"));
-            puntos = puntos + cartas;
-            if (puntos == 21) {
-                alert("Sus cartas suman " + puntos )
-                break
-            }
-            else if (puntos >21) {
-                break;
-            } else {
-                sumar = prompt("Sus cartas suman " + puntos + " ¿Quiere otra carta? (Si o no)");
-            }
-        }
-    
-        if (puntos > 21) {
-            alert("Se pasó de 21, la casa gana");
-        } else {
-            let casa1 = parseInt(prompt("Ingrese el valor de la primera carta de la casa"))
-            let casa2 = parseInt(prompt("Ingrese el valor de la segunda carta de la casa"))
-            let puntosCasa = casa1 + casa2;
-    
-            while (puntosCasa <17) {
-                let casa = parseInt(prompt("La casa suma " + puntosCasa + " Ingrese el valor de la siguiente carta de la casa"))
-                puntosCasa = puntosCasa + casa;
-            }
-    
-            if (puntosCasa >21) {
-                alert ("Felicitaciones, usted ganó")
-            } else {
-                if (puntos > puntosCasa) {
-                    alert ("Felicitaciones, usted ganó")
-                } else {
-                    alert ("La casa gana")
-                }
-            }
-        }
-    
+        alert("¡Usted gana!");
+        balance += apuesta;
     }
-    
-    }
-    
-    
-let newGame = "si";
-    
-alert("Bienvenido a la mesa de Blackjack")
-    
-while (newGame.toLowerCase() === "si") {
-    jugar();
-    newGame = prompt("¿Quiere volver a jugar? (Si o no)")
+    document.getElementById("balance").innerText = balance;
+    document.querySelector("#volverAJugar").hidden = false;
 }
 
-*/
+function reiniciar(){
+    let cartas = document.getElementsByTagName("img");
+    while (cartas.length !== 0) {
+        cartas[0].remove();
+    }
+
+puntosCasa = 0;
+puntosJugador = 0;
+acesJugador = 0;
+acesCasa = 0;
+}
+
+function volverAJugar() {
+    reiniciar();
+    document.querySelector("#volverAJugar").hidden = true;
+    armarMazo();
+    mezclarMazo();
+    apuesta = parseInt(prompt("Ingrese su apuesta. Balance = " + balance));
+    while (isNaN(apuesta) || apuesta >balance || apuesta <1) {
+        alert("Debe ingresar un número valido")
+        apuesta = parseInt(prompt("Ingrese su apuesta"));
+    }
+    jugar();
+
+    document.getElementById("balance").innerText = balance;
+    document.getElementById("apuesta").innerText = apuesta;
+}
+
+volverAJugar();

@@ -1,8 +1,14 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
     background-image: url(../media/table.jpg);
     background-size: cover;
+    color: aliceblue;
 }
 
 #cartas-casa img {
@@ -17,13 +23,13 @@ body {
     margin: 1px;
 }
 
-#hit {
+#pedir {
     width: 100px;
     height: 50px;
     font-size: 20px;
 }
 
-#stay {
+#parar {
     width: 100px;
     height: 50px;
     font-size: 20px;

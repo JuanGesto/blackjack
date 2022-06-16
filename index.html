@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,24 +9,38 @@
     <link rel="stylesheet" href="css/style.css">
     <title>Blackjack</title>
 </head>
+
 <body>
-    <h1>Blackjack</h1>
 
-    <h2>Casa: <span id="puntos-casa"></span></h2>
-    <div id="cartas-casa">
-        <img id="back" src="media/BACK.png">
-    </div>
+    <main>
+        <h1>Blackjack</h1>
 
-    <h2>Jugador: <span id="puntos-jugador"></span></h2>
-    <div id="cartas-jugador"></div>
+        <h2>Casa: <span id="puntos-casa"></span></h2>
+        <div id="cartas-casa"></div>
 
-    <br>
-    <button id="hit">Hit</button>
-    <button id="stay">Stay</button>
-    <p id="results"></p>
+        <h2>Jugador: <span id="puntos-jugador"></span></h2>
+        <div id="cartas-jugador"></div>
+
+        <div id="botones">
+            <button id="parar" onclick="parar()">Parar</button>
+            <button id="pedir" onclick="pedir()">Pedir</button>
+        </div>
+
+        <div id="dinero">
+            <h3>Balance: <span id="balance"></span></h3>
+            <h3>apuesta: <span id="apuesta"></span></h3>
+        </div>
+
+        <div id="final">
+            <h2 id="resultado"><span id="resultado"></span></h2>
+            <button id="volverAJugar" onclick="volverAJugar()">Volver a jugar</button>
+        </div>
+
+    </main>
 
 
     <!-- JS -->
     <script src="js/main.js"></script>
 </body>
+
 </html>
