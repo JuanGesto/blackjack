@@ -4,33 +4,44 @@
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Lora', serif;
     text-align: center;
+    background-color: #0D5428;
     background-image: url(../media/table.jpg);
     background-size: cover;
     color: aliceblue;
 }
 
 #cartas-casa img {
-    height: 175px;
-    width: 125px;
-    margin: 1px;
+    width: 9%;
+    margin: 0.5%;
 }
 
 #cartas-jugador img {
-    height: 175px;
-    width: 125px;
-    margin: 1px;
+    width: 9%;
+    margin: 0.5%;
 }
 
-#pedir {
-    width: 100px;
-    height: 50px;
-    font-size: 20px;
+#pedir, #parar{
+    width: 9%;
+    font-size: 1.3em;
+    font-family: 'Lora', serif;
+    border-radius: 90% 90% 90% 90% / 80% 80% 80% 80%;
+    color: aliceblue;
+    background: linear-gradient(170deg, rgba(21, 39, 23, 0.397) 0%, rgb(32, 32, 32) 100%);
+
 }
 
-#parar {
-    width: 100px;
-    height: 50px;
-    font-size: 20px;
+#volverAJugar {
+    width: 10%;
+    font-size: 1em;
+    font-family: 'Lora', serif;
+    border-radius: 60% 60% 60% 60% / 80% 80% 80% 80%;
+    color: aliceblue;
+    background: linear-gradient(170deg, rgba(21, 39, 23, 0.397) 0%, rgb(32, 32, 32) 100%);
+}
+
+
+#pedir:hover, #parar:hover, #volverAJugar {
+    filter: brightness(80%);
 }
