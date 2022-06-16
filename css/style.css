@@ -12,24 +12,28 @@ body {
     color: aliceblue;
 }
 
-#cartas-casa img {
-    width: 9%;
-    margin: 0.5%;
+h1 {
+    margin-top: 1%;
 }
 
-#cartas-jugador img {
+#cartas-casa img, #cartas-jugador img {
     width: 9%;
     margin: 0.5%;
+    box-shadow:  5px 5px 10px #0000008f, -5px -5px 10px #00000000;
 }
 
-#pedir, #parar{
+#pedir,
+#parar {
     width: 9%;
     font-size: 1.3em;
     font-family: 'Lora', serif;
     border-radius: 90% 90% 90% 90% / 80% 80% 80% 80%;
     color: aliceblue;
     background: linear-gradient(170deg, rgba(21, 39, 23, 0.397) 0%, rgb(32, 32, 32) 100%);
-
+    box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
+    -webkit-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
+    -moz-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
+    -o-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
 }
 
 #volverAJugar {
@@ -39,9 +43,28 @@ body {
     border-radius: 60% 60% 60% 60% / 80% 80% 80% 80%;
     color: aliceblue;
     background: linear-gradient(170deg, rgba(21, 39, 23, 0.397) 0%, rgb(32, 32, 32) 100%);
+    box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
+    -webkit-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
+    -moz-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
+    -o-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
 }
 
+#pedir:hover,
+#parar:hover,
+#volverAJugar {
+    filter: brightness(130%);
+    transition: all 0.2s;
+}
 
-#pedir:hover, #parar:hover, #volverAJugar {
-    filter: brightness(80%);
+#pedir:active, #parar:active, #volverAJugar:active {
+    filter: brightness(120%);    
+    box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    -webkit-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    -moz-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    -o-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    transition: all 0.5;
+}
+
+#dinero {
+    margin: 0.5%;
 }

@@ -137,7 +137,6 @@ function parar() {
     while (puntosCasa < 17) {
         repartirCasa();
 
-
         if (puntosCasa > 21 && acesCasa > 0) {
             puntosCasa -= 10;
             acesCasa -= 1;
@@ -145,7 +144,7 @@ function parar() {
 
         document.getElementById("puntos-casa").innerText = puntosCasa;
     }
-    resultado();
+    setTimeout(resultado, 1000);
 }
 
 function resultado() {
