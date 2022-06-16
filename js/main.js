@@ -47,7 +47,7 @@ function repartirJugador() {
     puntosJugador += getValor(carta);
 
     cartaImg = document.createElement("img");
-    cartaImg.src = "./media/" + carta + ".png";
+    cartaImg.src = "./media/" + carta + ".svg";
     document.getElementById("cartas-jugador").append(cartaImg);
 
     if (getValor(carta) == 11) {
@@ -64,7 +64,7 @@ function repartirCasa() {
     puntosCasa += getValor(carta);
 
     cartaImg = document.createElement("img");
-    cartaImg.src = "./media/" + carta + ".png";
+    cartaImg.src = "./media/" + carta + ".svg";
     document.getElementById("cartas-casa").append(cartaImg);
 
     if (getValor(carta) == 11) {
@@ -92,6 +92,10 @@ function jugar() {
 
     if (getValor(carta) == 11) {
         acesCasa++;
+    }
+    if (puntosCasa > 21 && acesCasa > 0) {
+        puntosCasa -= 10;
+        acesCasa -= 1;
     }
     
     document.getElementById("puntos-jugador").innerText = puntosJugador;
@@ -126,12 +130,13 @@ function parar() {
     backImg.remove();
 
     cartaImg = document.createElement("img");
-    cartaImg.src = "./media/" + back + ".png";
+    cartaImg.src = "./media/" + back + ".svg";
     document.getElementById("cartas-casa").append(cartaImg);
     document.getElementById("puntos-casa").innerText = puntosCasa;
 
     while (puntosCasa < 17) {
-        setTimeout(repartirCasa, 100);
+        repartirCasa();
+
 
         if (puntosCasa > 21 && acesCasa > 0) {
             puntosCasa -= 10;
@@ -140,7 +145,7 @@ function parar() {
 
         document.getElementById("puntos-casa").innerText = puntosCasa;
     }
-    setTimeout(resultado, 1500);
+    resultado();
 }
 
 function resultado() {
@@ -154,7 +159,9 @@ function resultado() {
         balance += apuesta;
     }
     document.getElementById("balance").innerText = balance;
+    if (balance !== 0) {
     document.querySelector("#volverAJugar").hidden = false;
+    }
 }
 
 function reiniciar(){
