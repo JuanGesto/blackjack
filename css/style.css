@@ -122,10 +122,10 @@ h4 {
     left: 25%;
     top: 25%;
     background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8407738095238095) 25%, rgba(0,0,0,0.8407738095238095) 75%, rgba(0,0,0,0) 100%);
-/*    animation-name: carteles-fade;
-    animation-duration: 6s;*/
+    animation-name: carteles-fade;
+    animation-duration: 6s;
 }
-/*
+
 @keyframes carteles-fade {
     0% {
         opacity: 0%;
@@ -136,4 +136,81 @@ h4 {
     100% {
         opacity: 0%;
     }
-} */
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Reglas                                   */
+/* -------------------------------------------------------------------------- */
+
+#reglas-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+}
+
+#reglas {
+    display: grid;
+    grid-template-areas: "h2 cerrar" "p1 p1" "p2 p2";
+    grid-template-columns: 15fr 1fr;
+    background-color: #000000bd;
+    width: 30em;
+    height: 25em;
+    margin: 5%;
+    padding: 2%;
+    text-align: justify;
+    border-radius: 2%;
+}
+
+#cerrar, #abrir {
+    grid-area: cerrar;
+    width: 1.5em;
+    height: 1.5em;
+    font-size: 1.3em;
+    font-family: 'Lora', serif;
+    border-radius: 50%;
+    color: aliceblue;
+    background: linear-gradient(170deg, rgba(21, 39, 23, 0.397) 0%, rgb(32, 32, 32) 100%);
+    box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
+    -webkit-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
+    -moz-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
+    -o-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
+}
+
+#abrir {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+#cerrar:hover, #abrir:hover {
+    filter: brightness(130%);
+    transition: all 0.2s;
+}
+
+#cerrar:active, #abrir:active {
+    filter: brightness(120%);    
+    box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    -webkit-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    -moz-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    -o-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    transition: all 0.5;
+}
+
+#reglas h2 {
+    grid-area: h2;
+
+}
+
+#p1 {
+    grid-area: p1;
+    margin: 1rem auto;
+}
+
+#p2 {
+    grid-area: p2;
+}
+

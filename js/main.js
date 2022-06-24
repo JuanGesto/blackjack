@@ -78,6 +78,7 @@ function repartirCasa() {
     puntosCasa += getValor(carta);
 
     cartaImg = document.createElement("img");
+    cartaImg.classList.add("cartaC")
     cartaImg.src = "./media/" + carta + ".svg";
     document.getElementById("cartas-casa").append(cartaImg);
 
@@ -228,12 +229,13 @@ function parar() {
 function resultado() {
     let cartelResultado = document.getElementById("resultado");
     let cartasJugador = document.getElementsByClassName("cartaJ");
+    let cartasCasa= document.getElementsByClassName("cartaC");
     
-    if (puntosJugador == 21 & cartasJugador.length == 2 & puntosCasa !== 21) {
+    if (puntosJugador == 21 & cartasJugador.length == 2 & puntosCasa !== 21 & cartasCasa.length !== 2) {
         cartelResultado.innerText = "¡Blackjack!";
         balance += parseInt(apuesta) * 1.5;
         balance = Math.ceil(balance);
-    } else if (puntosJugador > 21 || (puntosCasa > puntosJugador & puntosCasa < 22)) {
+    } else if (puntosJugador > 21 || (puntosCasa > puntosJugador & puntosCasa < 22) || puntosCasa == 21 & cartasCasa.length == 2 & puntosJugador !== 21 & cartasJugador.length !== 2) {
         cartelResultado.innerText = "La casa gana";
         balance -= parseInt(apuesta);
     } else if (puntosJugador == puntosCasa) {
@@ -306,6 +308,7 @@ function volverAJugar() {
 
 volverAJugar();
 range();
+document.querySelector("#ventana-reglas").hidden = true;
 
 /* -------------------------------------------------------------------------- */
 /*                              recompensa diaria                             */
@@ -321,4 +324,22 @@ if (dia !== ayer) {
 }
 ayer = dia
 localStorage.setItem("ayer", ayer)
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Reglas                                   */
+/* -------------------------------------------------------------------------- */
+
+var abrir = document.getElementById("abrir");
+abrir.addEventListener("click", abrirReglas);
+function abrirReglas() {
+    document.querySelector("#ventana-reglas").hidden = false
+}
+
+
+
+var cerrar = document.getElementById("cerrar");
+cerrar.addEventListener("click", cerrarReglas);
+function cerrarReglas() {
+    document.querySelector("#ventana-reglas").hidden = true;
 }
