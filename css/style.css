@@ -14,17 +14,25 @@ body {
 
 h1 {
     margin-top: 1%;
+    font-size: 2.5em;
+}
+h3 {
+    font-size: 1.7em;
+}
+h4 {
+    font-size: 1.3em;
 }
 
 #cartas-casa img, #cartas-jugador img {
-    width: 9%;
+    width: 7%;
     margin: 0.5%;
     box-shadow:  5px 5px 10px #0000008f, -5px -5px 10px #00000000;
 }
 
 #pedir,
-#parar {
-    width: 9%;
+#parar,
+#apostar {
+    width: 7%;
     font-size: 1.3em;
     font-family: 'Lora', serif;
     border-radius: 90% 90% 90% 90% / 80% 80% 80% 80%;
@@ -36,8 +44,12 @@ h1 {
     -o-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
 }
 
+#apostar {
+    margin-top: 27.5%;
+}
+
 #volverAJugar {
-    width: 10%;
+    width: 7%;
     font-size: 1em;
     font-family: 'Lora', serif;
     border-radius: 60% 60% 60% 60% / 80% 80% 80% 80%;
@@ -49,14 +61,12 @@ h1 {
     -o-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
 }
 
-#pedir:hover,
-#parar:hover,
-#volverAJugar {
+#pedir:hover, #parar:hover, #apostar:hover, #volverAJugar:hover {
     filter: brightness(130%);
     transition: all 0.2s;
 }
 
-#pedir:active, #parar:active, #volverAJugar:active {
+#pedir:active, #parar:active, #apostar:active, #volverAJugar:active {
     filter: brightness(120%);    
     box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
     -webkit-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
@@ -65,6 +75,65 @@ h1 {
     transition: all 0.5;
 }
 
+#slidercontainer {
+    width: 100%;
+    margin-top: 1%;
+}
+
+.slider {
+    appearance: none;
+    width: 10%;
+    height: .8em;
+    background: rgb(12, 65, 32);
+    box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    -webkit-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    -moz-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    -o-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    border-radius: 8%;
+}
+
+.slider::-webkit-slider-thumb{
+    appearance: none;
+    -webkit-appearance: none;
+    height: 1.2em;
+    width: 1.2em;
+    border-color: #000000;
+    border-width: 2em;
+    background: linear-gradient(170deg, rgb(23, 64, 36) 0%, rgb(37, 47, 41) 100%);
+    box-shadow: 2px 4px 8px #0000008f, -2px -4px 8px #00000000;
+    -webkit-box-shadow: 2px 4px 8px #0000008f, -2px -4px 8px #00000000;
+    -moz-box-shadow: 2px 4px 8px #0000008f, -2px -4px 8px #00000000;
+    -o-box-shadow: 2px 4px 8px #0000008f, -2px -4px 8px #00000000;
+    border-radius: 50%;
+}
+
+.slider::-webkit-slider-thumb:hover, .slider::-webkit-slider-thumb:active{
+    filter: brightness(110%);
+    transition: all 0.2s;
+}
+
 #dinero {
     margin: 0.5%;
 }
+
+#carteles {
+    width: 50%;
+    position: absolute;
+    left: 25%;
+    top: 25%;
+    background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8407738095238095) 25%, rgba(0,0,0,0.8407738095238095) 75%, rgba(0,0,0,0) 100%);
+/*    animation-name: carteles-fade;
+    animation-duration: 6s;*/
+}
+/*
+@keyframes carteles-fade {
+    0% {
+        opacity: 0%;
+    }
+    10%, 90% {
+        opacity: 100%;
+    }
+    100% {
+        opacity: 0%;
+    }
+} */

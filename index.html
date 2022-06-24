@@ -15,31 +15,43 @@
 </head>
 
 <body>
-
     <main>
-        <h1>Blackjack</h1>
+        
+            <h1>Blackjack</h1>
+        <div id="contenido">
+            <h3>Casa: <span id="puntos-casa"></span></h3>
+            <div id="cartas-casa">
+            </div>
 
-        <h2>Casa: <span id="puntos-casa"></span></h2>
-        <div id="cartas-casa"></div>
-
-        <h2>Jugador: <span id="puntos-jugador"></span></h2>
-        <div id="cartas-jugador"></div>
-
-        <div id="botones">
-            <button id="parar" onclick="parar()">Parar</button>
-            <button id="pedir" onclick="pedir()">Pedir</button>
+            <h3>Jugador: <span id="puntos-jugador"></span></h3>
+            <div id="cartas-jugador"></div>
         </div>
 
-        <div id="dinero">
-            <h3>Balance: <span id="balance"></span></h3>
-            <h3>apuesta: <span id="apuesta"></span></h3>
+        <div id="clickable">
+            <div id="botones">
+                <button id="parar">Parar</button>
+                <button id="pedir">Pedir</button>
+                <button id="apostar">Apostar</button>
+            </div>
+
+            <div id="slidercontainer">
+                <input type="range" min="1" max="1000" value="100" step="1" class="slider" id="myRange">
+            </div>
+
+            <div id="dinero">
+                <h4>Apuesta: <span id="apuesta"></span></h4>
+                <h4>Balance: <span id="balance"></span></h4>
+            </div>
+
+            <div id="final">
+                <button id="volverAJugar">Volver a jugar</button>
+            </div>
         </div>
 
-        <div id="final">
-            <h2 id="resultado"><span id="resultado"></span></h2>
-            <button id="volverAJugar" onclick="volverAJugar()">Volver a jugar</button>
+        <div id="carteles">
+            <h2 id="hagaApuesta">Haga su apuesta</h2>
+            <h2 id="resultado">¡Usted gana!</h2>
         </div>
-
     </main>
 
 

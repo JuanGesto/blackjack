@@ -4,8 +4,17 @@ var back;
 var mazo;
 var acesJugador = 0;
 var acesCasa = 0;
-var balance = 1000;
-var apuesta = 0;
+var balance;
+var slider;
+var max;
+var apuesta;
+var hoy;
+var dia;
+var ayer;
+
+/* -------------------------------------------------------------------------- */
+/*                   Funciones para armar y mezclar el mazo                   */
+/* -------------------------------------------------------------------------- */
 
 function armarMazo() {
     const palos = ["C", "D", "H", "S"];
@@ -28,6 +37,10 @@ function mezclarMazo() {
     }
 }
 
+/* -------------------------------------------------------------------------- */
+/*            Funciones para repartir cartas y asignarles un valor            */
+/* -------------------------------------------------------------------------- */
+
 function getValor(carta) {
     let valorCarta = carta.split("-");
     let valor = valorCarta[0];
@@ -47,6 +60,7 @@ function repartirJugador() {
     puntosJugador += getValor(carta);
 
     cartaImg = document.createElement("img");
+    cartaImg.classList.add("cartaJ")
     cartaImg.src = "./media/" + carta + ".svg";
     document.getElementById("cartas-jugador").append(cartaImg);
 
@@ -76,6 +90,52 @@ function repartirCasa() {
     }
 }
 
+/* -------------------------------------------------------------------------- */
+/*                         Funcion que maneja el range                        */
+/* -------------------------------------------------------------------------- */
+
+function range() {    
+    slider = document.getElementById("myRange");
+    apuesta = document.getElementById("apuesta");
+    slider.addEventListener("wheel", function (e) {
+        if (e.deltaY < 0) {
+            slider.valueAsNumber += 1;
+        } else {
+            slider.value -= 1;
+        }
+        apuesta.innerText = this.value;
+        e.preventDefault();
+        e.stopPropagation();
+    })
+    
+    slider.oninput = function () {
+        apuesta.innerText = this.value;
+    }
+    }
+
+/* -------------------------------------------------------------------------- */
+/*                                Boton apostar                               */
+/* -------------------------------------------------------------------------- */
+
+var btnApostar = document.getElementById("apostar");
+btnApostar.addEventListener("click", apostar);
+
+function apostar() {
+    document.querySelector("#slidercontainer").hidden = true;
+    document.querySelector("#apostar").hidden = true;
+    document.querySelector("#parar").hidden = false;
+    document.querySelector("#pedir").hidden = false;
+    document.querySelector("#contenido").hidden = false;
+    document.querySelector("#hagaApuesta").hidden = true;
+    apuesta = slider.value;
+    jugar();
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*                         Funcion que inicia el juego                        */
+/* -------------------------------------------------------------------------- */
+
 function jugar() {
     repartirJugador();
     repartirCasa();
@@ -97,7 +157,7 @@ function jugar() {
         puntosCasa -= 10;
         acesCasa -= 1;
     }
-    
+
     document.getElementById("puntos-jugador").innerText = puntosJugador;
 
     document.querySelector("#pedir").hidden = false;
@@ -107,6 +167,13 @@ function jugar() {
         parar();
     }
 }
+
+/* -------------------------------------------------------------------------- */
+/*                                 Boton pedir                                */
+/* -------------------------------------------------------------------------- */
+
+var btnPedir = document.getElementById("pedir");
+btnPedir.addEventListener("click", pedir);
 
 function pedir() {
     repartirJugador();
@@ -122,6 +189,13 @@ function pedir() {
         parar();
     }
 }
+
+/* -------------------------------------------------------------------------- */
+/*                                 Boton parar                                */
+/* -------------------------------------------------------------------------- */
+
+var btnParar = document.getElementById("parar");
+btnParar.addEventListener("click", parar);
 
 function parar() {
     document.querySelector("#pedir").hidden = true;
@@ -147,48 +221,104 @@ function parar() {
     setTimeout(resultado, 1000);
 }
 
+/* -------------------------------------------------------------------------- */
+/*             Funcion que calcula el ganador y ajusta el balance             */
+/* -------------------------------------------------------------------------- */
+
 function resultado() {
-    if (puntosJugador > 21 || (puntosCasa > puntosJugador & puntosCasa < 22)) {
-        alert("La casa gana.");
-        balance -= apuesta;
+    let cartelResultado = document.getElementById("resultado");
+    let cartasJugador = document.getElementsByClassName("cartaJ");
+    
+    if (puntosJugador == 21 & cartasJugador.length == 2 & puntosCasa !== 21) {
+        cartelResultado.innerText = "¡Blackjack!";
+        balance += parseInt(apuesta) * 1.5;
+        balance = Math.ceil(balance);
+    } else if (puntosJugador > 21 || (puntosCasa > puntosJugador & puntosCasa < 22)) {
+        cartelResultado.innerText = "La casa gana";
+        balance -= parseInt(apuesta);
     } else if (puntosJugador == puntosCasa) {
-        alert("Es un empate.");
+        cartelResultado.innerText = "Es un empate";
     } else {
-        alert("¡Usted gana!");
-        balance += apuesta;
+        cartelResultado.innerText = "¡Usted gana!";
+        balance += parseInt(apuesta);
     }
     document.getElementById("balance").innerText = balance;
     if (balance !== 0) {
-    document.querySelector("#volverAJugar").hidden = false;
+        document.querySelector("#volverAJugar").hidden = false;
+    } else {
+        apuesta = 0;
+        document.getElementById("apuesta").innerText = apuesta;
     }
+    max = document.getElementById("myRange");
+    max.setAttribute("max", balance);
+    apuesta.innerHTML = slider.value;
+
+    document.querySelector("#resultado").hidden = false;
+
+    localStorage.setItem("balance", balance);
 }
 
-function reiniciar(){
+/* -------------------------------------------------------------------------- */
+/*                            Boton volver a jugar                            */
+/* -------------------------------------------------------------------------- */
+
+var btnVolverAJugar = document.getElementById("volverAJugar");
+btnVolverAJugar.addEventListener("click", volverAJugar);
+
+function volverAJugar() {
+    balance = parseInt(localStorage.getItem("balance"));
+    if (isNaN(balance)) {
+        balance = 0
+    }
+    recompensa();
+
     let cartas = document.getElementsByTagName("img");
     while (cartas.length !== 0) {
         cartas[0].remove();
     }
 
-puntosCasa = 0;
-puntosJugador = 0;
-acesJugador = 0;
-acesCasa = 0;
-}
+    puntosCasa = 0;
+    puntosJugador = 0;
+    acesJugador = 0;
+    acesCasa = 0;
 
-function volverAJugar() {
-    reiniciar();
     document.querySelector("#volverAJugar").hidden = true;
+    document.querySelector("#parar").hidden = true;
+    document.querySelector("#pedir").hidden = true;
+    document.querySelector("#contenido").hidden = true;
+    document.querySelector("#hagaApuesta").hidden = false;
+    document.querySelector("#resultado").hidden = true;
+
     armarMazo();
     mezclarMazo();
-    apuesta = parseInt(prompt("Ingrese su apuesta. Balance = " + balance));
-    while (isNaN(apuesta) || apuesta >balance || apuesta <1) {
-        alert("Debe ingresar un número valido")
-        apuesta = parseInt(prompt("Ingrese su apuesta"));
-    }
-    jugar();
+
+
+    document.querySelector("#slidercontainer").hidden = false;
+    document.querySelector("#apostar").hidden = false;
 
     document.getElementById("balance").innerText = balance;
     document.getElementById("apuesta").innerText = apuesta;
+
+    apuesta = document.getElementById("apuesta");
+    apuesta.innerText = document.getElementById("myRange").value;
+    
 }
 
 volverAJugar();
+range();
+
+/* -------------------------------------------------------------------------- */
+/*                              recompensa diaria                             */
+/* -------------------------------------------------------------------------- */
+
+function recompensa() {
+fecha = new Date();
+hoy = localStorage.setItem("hoy", fecha);
+dia = parseInt(fecha.getDay());
+ayer = parseInt(localStorage.getItem("ayer"));
+if (dia !== ayer) {
+    balance += 1000;
+}
+ayer = dia
+localStorage.setItem("ayer", ayer)
+}
