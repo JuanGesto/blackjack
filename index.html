@@ -16,8 +16,23 @@
 
 <body>
     <main>
-        
-            <h1>Blackjack</h1>
+        <!-- ----------------------------------------------------------------------- -->
+        <!--                                  menu                                   -->
+        <!-- ----------------------------------------------------------------------- -->
+
+        <div id="menu">
+            <button id="abrirReglas" class="boton">?</button>
+            <button id="musica" class="boton">♫</button>
+            <button id="abrirRecompensa" class="boton">$</button>
+
+            
+        </div>
+
+        <!-- ----------------------------------------------------------------------- -->
+        <!--                                  juego                                  -->
+        <!-- ----------------------------------------------------------------------- -->
+
+        <h1>Blackjack</h1>
         <div id="contenido">
             <h3>Casa: <span id="puntos-casa"></span></h3>
             <div id="cartas-casa">
@@ -29,8 +44,8 @@
 
         <div id="clickable">
             <div id="botones">
-                <button id="parar">Parar</button>
-                <button id="pedir">Pedir</button>
+                <button id="parar"> Parar </button>
+                <button id="pedir"> Pedir </button>
                 <button id="apostar">Apostar</button>
             </div>
 
@@ -53,24 +68,65 @@
             <h2 id="resultado">¡Usted gana!</h2>
         </div>
 
-        <button id="abrir">?</button>        
     </main>
-<section id="ventana-reglas">
-    <div id="reglas-container">
-        <div id="reglas">
-            <h2>
-                Reglas de Blackjack
-            </h2>
-            <button id="cerrar"> X </button>
-            <p id="p1">
-                El Black Jack es uno de los juegos más populares del Casino. El objetivo es simple: ganarle al Croupier obteniendo el puntaje más cercano a 21, pero sin pasarse de los 21 puntos. Las figuras (el Valet, la Reina y el Rey) valen 10, el As vale 11 o 1 y todas las otras cartas conservan su valor. El Black Jack se produce cuando las dos (2) primeras cartas son un diez o cualquier figura más un As.
-            </p>
-            <p id="p2">
-                Se reparten dos cartas a la vista para cada jugador. Entonces el Croupier preguntará si necesita otra carta. En dicho caso, señáleselo claramente con la mano. Si usted tiene Black Jack, gana y se le paga 3 a 2, a menos que el Croupier también tenga Black Jack, en cuyo caso se llama un Empate y ninguna de las dos manos gana. Si sus cartas totalizan un valor más cercano a 21 que las del Croupier, usted gana y se le paga el valor de la apuesta. El Croupier deberá plantarse con un total de 17 o más y deberá tomar una carta más si tiene 16 o menos.
-            </p>
+
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                                 reglas                                  -->
+    <!-- ----------------------------------------------------------------------- -->
+
+    <section id="ventana-reglas">
+        <div id="reglas-container">
+            <div id="reglas">
+                <div class="row1">
+                    <h2>
+                        Reglas de Blackjack
+                    </h2>
+                    <button id="cerrarReglas" class="cerrar"> X </button>
+                </div>
+                <p id="p1">
+                    El Black Jack es uno de los juegos más populares del Casino. El objetivo es simple: ganarle al
+                    Croupier obteniendo el puntaje más cercano a 21, pero sin pasarse de los 21 puntos. Las figuras (el
+                    Valet, la Reina y el Rey) valen 10, el As vale 11 o 1 y todas las otras cartas conservan su valor.
+                    El Black Jack se produce cuando las dos (2) primeras cartas son un diez o cualquier figura más un
+                    As.
+                </p>
+                <p id="p2">
+                    Se reparten dos cartas a la vista para cada jugador. Entonces el Croupier preguntará si necesita
+                    otra carta. En dicho caso, señáleselo claramente con la mano. Si usted tiene Black Jack, gana y se
+                    le paga 3 a 2, a menos que el Croupier también tenga Black Jack, en cuyo caso se llama un Empate y
+                    ninguna de las dos manos gana. Si sus cartas totalizan un valor más cercano a 21 que las del
+                    Croupier, usted gana y se le paga el valor de la apuesta. El Croupier deberá plantarse con un total
+                    de 17 o más y deberá tomar una carta más si tiene 16 o menos.
+                </p>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                               recompensa                                -->
+    <!-- ----------------------------------------------------------------------- -->
+
+    <section id="ventana-recompensa">
+        <div id="recompensa-container">
+            <div id="recompensa">
+                <div class="row1">
+                    <h2>
+                        Recompensa diaria
+                    </h2>
+                    <button id="cerrarRecompensa" class="cerrar"> X </button>
+                </div>
+                <p id="pRecompensa">
+                    Si te quedaste sin fichas para apostar, no te preocupes.<br>
+                    Podes volver todos los días y reclamar un bono de 1000 fichas haciendo click en el boton de
+                    abajo.<br>
+
+                </p>
+                <div id="reclamar-container">
+                    <button id="reclamar">Reclamar</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- JS -->
     <script src="js/main.js"></script>

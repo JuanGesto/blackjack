@@ -1,16 +1,16 @@
-var puntosCasa = 0;
-var puntosJugador = 0;
-var back;
-var mazo;
-var acesJugador = 0;
-var acesCasa = 0;
-var balance;
-var slider;
-var max;
-var apuesta;
-var hoy;
-var dia;
-var ayer;
+let puntosCasa = 0;
+let puntosJugador = 0;
+let back;
+let mazo;
+let acesJugador = 0;
+let acesCasa = 0;
+let balance;
+let slider;
+let max;
+let apuesta;
+let hoy;
+let dia;
+let ayer;
 
 /* -------------------------------------------------------------------------- */
 /*                   Funciones para armar y mezclar el mazo                   */
@@ -112,13 +112,15 @@ function range() {
     slider.oninput = function () {
         apuesta.innerText = this.value;
     }
+    max = document.getElementById("myRange");
+    max.setAttribute("max", balance);
     }
 
 /* -------------------------------------------------------------------------- */
 /*                                Boton apostar                               */
 /* -------------------------------------------------------------------------- */
 
-var btnApostar = document.getElementById("apostar");
+let btnApostar = document.getElementById("apostar");
 btnApostar.addEventListener("click", apostar);
 
 function apostar() {
@@ -129,6 +131,9 @@ function apostar() {
     document.querySelector("#contenido").hidden = false;
     document.querySelector("#hagaApuesta").hidden = true;
     apuesta = slider.value;
+    balance -= apuesta
+    document.getElementById("balance").innerText = balance;
+    localStorage.setItem("balance", balance);
     jugar();
 }
 
@@ -173,7 +178,7 @@ function jugar() {
 /*                                 Boton pedir                                */
 /* -------------------------------------------------------------------------- */
 
-var btnPedir = document.getElementById("pedir");
+let btnPedir = document.getElementById("pedir");
 btnPedir.addEventListener("click", pedir);
 
 function pedir() {
@@ -195,7 +200,7 @@ function pedir() {
 /*                                 Boton parar                                */
 /* -------------------------------------------------------------------------- */
 
-var btnParar = document.getElementById("parar");
+let btnParar = document.getElementById("parar");
 btnParar.addEventListener("click", parar);
 
 function parar() {
@@ -225,24 +230,35 @@ function parar() {
 /* -------------------------------------------------------------------------- */
 /*             Funcion que calcula el ganador y ajusta el balance             */
 /* -------------------------------------------------------------------------- */
-
+let cartelResultado;
+let cartasJugador;
+let cartasCasa;
+let blackjackJugador;
+let blackjackCasa;
 function resultado() {
-    let cartelResultado = document.getElementById("resultado");
-    let cartasJugador = document.getElementsByClassName("cartaJ");
-    let cartasCasa= document.getElementsByClassName("cartaC");
-    
-    if (puntosJugador == 21 & cartasJugador.length == 2 & puntosCasa !== 21 & cartasCasa.length !== 2) {
+    cartelResultado = document.getElementById("resultado");
+    cartasJugador = document.getElementsByClassName("cartaJ");
+    cartasCasa= document.getElementsByClassName("cartaC");
+    blackjackJugador = false;
+    blackjackCasa = false;
+    if (puntosJugador === 21 & cartasJugador.length === 2) {
+        blackjackJugador = true;
+    }
+    if (puntosCasa === 21 & cartasCasa.length === 1) {
+        blackjackCasa = true;
+    }
+    if (blackjackJugador === true & blackjackCasa != true) {
         cartelResultado.innerText = "¡Blackjack!";
-        balance += parseInt(apuesta) * 1.5;
+        balance += parseInt(apuesta) * 2.5;
         balance = Math.ceil(balance);
-    } else if (puntosJugador > 21 || (puntosCasa > puntosJugador & puntosCasa < 22) || puntosCasa == 21 & cartasCasa.length == 2 & puntosJugador !== 21 & cartasJugador.length !== 2) {
+    } else if (puntosJugador > 21 || (puntosCasa > puntosJugador & puntosCasa < 22) || (blackjackCasa === true & blackjackJugador != true)) {
         cartelResultado.innerText = "La casa gana";
-        balance -= parseInt(apuesta);
     } else if (puntosJugador == puntosCasa) {
         cartelResultado.innerText = "Es un empate";
+        balance += parseInt(apuesta);
     } else {
         cartelResultado.innerText = "¡Usted gana!";
-        balance += parseInt(apuesta);
+        balance += parseInt(apuesta) * 2;
     }
     document.getElementById("balance").innerText = balance;
     if (balance !== 0) {
@@ -264,13 +280,13 @@ function resultado() {
 /*                            Boton volver a jugar                            */
 /* -------------------------------------------------------------------------- */
 
-var btnVolverAJugar = document.getElementById("volverAJugar");
+let btnVolverAJugar = document.getElementById("volverAJugar");
 btnVolverAJugar.addEventListener("click", volverAJugar);
 
 function volverAJugar() {
     balance = parseInt(localStorage.getItem("balance"));
     if (isNaN(balance)) {
-        balance = 0
+        balance = 1000;
     }
     recompensa();
 
@@ -303,24 +319,57 @@ function volverAJugar() {
 
     apuesta = document.getElementById("apuesta");
     apuesta.innerText = document.getElementById("myRange").value;
-    
-}
 
-volverAJugar();
-range();
-document.querySelector("#ventana-reglas").hidden = true;
+    if (balance === 0) {
+    apuesta = 0;
+    document.getElementById("apuesta").innerText = apuesta;
+    btnApostar.setAttribute("disabled", true);
+} else {
+    btnApostar.removeAttribute("disabled");
+}
+}
 
 /* -------------------------------------------------------------------------- */
 /*                              recompensa diaria                             */
 /* -------------------------------------------------------------------------- */
+let btnAbrirRecompensa = document.getElementById("abrirRecompensa");
+btnAbrirRecompensa.addEventListener("click", abrirRecompensa);
+function abrirRecompensa() {
+    document.querySelector("#ventana-recompensa").hidden = false
+}
+let btnCerrarRecompensa = document.getElementById("cerrarRecompensa");
+btnCerrarRecompensa.addEventListener("click", cerrarRecompensa);
+function cerrarRecompensa() {
+    document.querySelector("#ventana-recompensa").hidden = true;
+}
+let btnReclamar = document.getElementById("reclamar");
+btnReclamar.addEventListener("click", reclamar);
+
+function reclamar() {
+    balance += 1000;
+    document.getElementById("balance").innerText = balance;
+    localStorage.setItem("balance", balance);
+    localStorage.setItem("reclamar", 0)
+    btnReclamar.setAttribute("disabled", true);
+}
 
 function recompensa() {
 fecha = new Date();
-hoy = localStorage.setItem("hoy", fecha);
 dia = parseInt(fecha.getDay());
+hoy = localStorage.setItem("hoy", dia);
 ayer = parseInt(localStorage.getItem("ayer"));
-if (dia !== ayer) {
-    balance += 1000;
+if (isNaN(ayer)) {
+    btnReclamar.setAttribute("disabled", true);
+    localStorage.setItem("reclamar", 0);
+} else if (dia == localStorage.getItem("ayer")) {
+    if (localStorage.getItem("reclamar") == 1) {
+        btnReclamar.removeAttribute("disabled");
+        } else {
+            btnReclamar.setAttribute("disabled", true);
+        }
+} else {
+    btnReclamar.removeAttribute("disabled");
+    localStorage.setItem("reclamar", 1);
 }
 ayer = dia
 localStorage.setItem("ayer", ayer)
@@ -330,16 +379,44 @@ localStorage.setItem("ayer", ayer)
 /*                                   Reglas                                   */
 /* -------------------------------------------------------------------------- */
 
-var abrir = document.getElementById("abrir");
-abrir.addEventListener("click", abrirReglas);
+let btnReglas = document.getElementById("abrirReglas");
+btnReglas.addEventListener("click", abrirReglas);
 function abrirReglas() {
     document.querySelector("#ventana-reglas").hidden = false
 }
 
-
-
-var cerrar = document.getElementById("cerrar");
-cerrar.addEventListener("click", cerrarReglas);
+let btnCerrarReglas = document.getElementById("cerrarReglas");
+btnCerrarReglas.addEventListener("click", cerrarReglas);
 function cerrarReglas() {
     document.querySelector("#ventana-reglas").hidden = true;
 }
+
+/* -------------------------------------------------------------------------- */
+/*                                   musica                                   */
+/* -------------------------------------------------------------------------- */
+
+let song = new Audio("./media/music/blackjack64.mp3");
+let isPlaying = false;
+let musica = document.getElementById("musica");
+musica.addEventListener("click", play);
+function play() {
+    isPlaying ? song.pause() : song.play();
+    isPlaying ? musica.innerHTML = "♫" : musica.innerHTML = "<del>♫</del>";
+}
+song.onplaying = function() {
+    isPlaying = true;
+}
+song.onpause = function() {
+    isPlaying = false;
+}
+song.addEventListener("ended", song.play);
+
+
+
+
+
+btnReclamar.setAttribute("disabled", true);
+volverAJugar();
+range();
+document.querySelector("#ventana-reglas").hidden = true;
+document.querySelector("#ventana-recompensa").hidden = true;
