@@ -461,14 +461,7 @@ function signUpCheck() {
 const newUser = [];
 function signUp(userID) {
 
-    newUser.push ({username: signUpName, password: signUpPassword});   //
-    /*
-    let user = {
-        ID: userID,
-        password: signUpPassword
-    };
-    localStorage.setItem(signUpName, JSON.stringify(user));
-    */
+    newUser.push ({username: signUpName, password: signUpPassword});
     newAccount(userID);
     localStorage.setItem("NOAccounts", userID + 1);
     NOAccounts += 1;
