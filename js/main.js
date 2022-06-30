@@ -427,10 +427,10 @@ song.addEventListener("ended", song.play);
 /* -------------------------------------------------------------------------- */
 /*                                   signUp                                   */
 /* -------------------------------------------------------------------------- */
-let inc = parseInt(localStorage.getItem("NOAccounts"));
-if (isNaN(inc)) {
-    inc = localStorage.setItem("NOAccounts", 0);
-    inc = parseInt(localStorage.getItem("NOAccounts"));
+let NOAccounts = parseInt(localStorage.getItem("NOAccounts"));
+if (isNaN(NOAccounts)) {
+    NOAccounts = localStorage.setItem("NOAccounts", 0);
+    NOAccounts = parseInt(localStorage.getItem("NOAccounts"));
 }
 let signUpSubmit = document.getElementById("signUpSubmit");
 signUpSubmit.addEventListener("click", signUpCheck)
@@ -442,8 +442,8 @@ function signUpCheck() {
     signUpName = document.getElementById("signUpName").value;
     signUpPassword = document.getElementById("signUpPassword").value;
 
-    for (let index = 0; index < localStorage.length; index++) {
-        if (signUpName.toUpperCase() === localStorage.key(index).toUpperCase()) {
+    for (let index = 0; index < NOAccounts; index++) {
+        if (signUpName === (JSON.parse(localStorage.getItem("user"+index))[0].username)) {
             taken = true;
         }
     }
@@ -455,20 +455,23 @@ function signUpCheck() {
         document.getElementById("invalid").innerHTML = "Este nombre de usuario ya fue tomado";
     } else {
         document.getElementById("invalid").innerHTML = "";
-        signUp(inc);
+        signUp(NOAccounts);
     }
 }
-
+const newUser = [];
 function signUp(userID) {
 
+    newUser.push ({username: signUpName, password: signUpPassword});   //
+    /*
     let user = {
         ID: userID,
         password: signUpPassword
     };
     localStorage.setItem(signUpName, JSON.stringify(user));
+    */
     newAccount(userID);
     localStorage.setItem("NOAccounts", userID + 1);
-    inc += 1;
+    NOAccounts += 1;
     document.querySelector("#logIn").hidden = false;
     document.querySelector("#signUp").hidden = true;
 }
@@ -480,17 +483,8 @@ iniciar.addEventListener("click", function () {
 })
 
 function newAccount(userID) {
-    let newAccount = {
-        blackjacks: 0,
-        racha: 0,
-        victorias: 0,
-        derrotas: 0,
-        empates: 0,
-        record: 0,
-        balance: 1000,
-        ayer
-    }
-    localStorage.setItem("stats" + userID, JSON.stringify(newAccount));
+    newUser.push({blackjacks: 0, racha: 0, victorias: 0, derrotas: 0, empates: 0, record: 0, balance: 1000, ayer})
+    localStorage.setItem("user" + userID, JSON.stringify(newUser));
 }
 
 /* -------------------------------------------------------------------------- */
@@ -498,6 +492,7 @@ function newAccount(userID) {
 /* -------------------------------------------------------------------------- */
 
 let userData;
+let loggedUser;
 let loggedUserStats;
 let registrarse = document.getElementById("registrate");
 registrarse.addEventListener("click", function () {
@@ -509,18 +504,21 @@ let logInSubmit = document.getElementById("logInSubmit");
 logInSubmit.addEventListener("click", logIn);
 
 let logInName;
-let logInPassword
+let logInPassword;
 
 function logIn() {
     logInName = document.getElementById("logInName");
     logInPassword = document.getElementById("logInPassword");
-
-    for (let i = 0; i < localStorage.length; i++) {
-        if (logInName.value === localStorage.key(i)) {
-            userData = JSON.parse(localStorage.getItem(logInName.value))
-            if (logInPassword.value === userData["password"]) {
+    for (let i = 0; i < NOAccounts; i++) {
+        userData = JSON.parse(localStorage.getItem("user"+i))
+        let tempObject = userData[0];
+        let tempUserName = tempObject.username;
+        if (logInName.value === tempUserName) {
+            let tempPassword = tempObject.password
+            if (logInPassword.value === tempPassword) {
+                loggedUser = "user"+i;
                 document.getElementById("userName").innerHTML = logInName.value;
-                loggedUserStats = JSON.parse(localStorage.getItem("stats" + userData["ID"]))
+                loggedUserStats = userData[1]
                 document.querySelector("#logIn").hidden = true;
                 document.querySelector("#stats").hidden = false;
 
@@ -628,7 +626,9 @@ function updateBalance() {
     document.getElementById("balance").innerText = balance;
 }
 function updateStats() {
-    localStorage.setItem("stats" + userData["ID"], JSON.stringify(loggedUserStats));
+    userData.pop();
+    userData.push(loggedUserStats);
+    localStorage.setItem(loggedUser, JSON.stringify(userData));
 }
 
 /* -------------------------------------------------------------------------- */
