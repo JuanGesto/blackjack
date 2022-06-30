@@ -206,7 +206,7 @@ h4 {
     font-size: 1.3em;
     font-family: 'Lora', serif;
     border-radius: 50%;
-    color: aliceblue;
+    color: #f0f8ff;
     background: linear-gradient(170deg, rgba(47, 99, 53, 0.507) 0%, rgba(32, 32, 32) 100%);
     box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
     -webkit-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
@@ -233,4 +233,186 @@ h4 {
     -moz-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
     -o-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
     transition: all 0.5;
+}
+
+#menu img {
+    width: 1%;
+}
+
+#abrirReglas {
+    background-image: url(../media/question-mark.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 35%;
+}
+#musica {
+    background-image: url(../media/music.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50%;
+}
+#nomusica {
+    background-image: url(../media/music-crossed.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50%;
+}
+#abrirRecompensa {
+    background-image: url(../media/money.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 35%;
+}
+#user {
+    background-image: url(../media/user.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 55%;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                  sidepanel                                 */
+/* -------------------------------------------------------------------------- */
+
+#sidepanel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20%;
+    height: 100%;
+    background: linear-gradient(170deg, rgb(47, 99, 53) 0%, rgba(32, 32, 32) 100%);;
+    box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
+    -webkit-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
+    -moz-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
+    -o-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
+}
+
+.input {
+    appearance: none;
+    height: 1em;
+    background: rgb(12, 65, 32);
+    box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    -webkit-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    -moz-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    -o-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    color: aliceblue;
+}
+.input:focus {
+    outline: none;
+}
+
+.submit {
+    font-family: 'Lora', serif;
+    color: #f0f8ff;
+    background: linear-gradient(170deg, rgba(47, 99, 53, 0.507) 0%, rgba(32, 32, 32) 100%);
+    box-shadow: 2px 2px 6px #0000008f, -2px -2px 6px #00000000;
+    -webkit-box-shadow: 2px 2px 6px #0000008f, -2px -2px 6px #00000000;
+    -moz-box-shadow: 2px 2px 6px #0000008f, -2px -2px 6px #00000000;
+    -o-box-shadow: 2px 2px 6px #0000008f, -2px -2px 6px #00000000;
+}
+.submit:hover {
+    filter: brightness(130%);
+    transition: all 0.2s;
+}
+.submit:active {
+    filter: brightness(120%);    
+    box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    -webkit-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    -moz-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    -o-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    transition: all 0.5;
+}
+
+/* Base for label styling */
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+    display: none;
+}
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
+    position: relative;
+    padding-left: 32px;
+    cursor: pointer;
+}
+/* checkbox aspect */
+[type="checkbox"]:not(:checked) + label:before,
+[type="checkbox"]:checked + label:before {
+    content: '';
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 1em;
+    height: 1em;
+    border: 2px inset #747474;
+    background: #0c4120;
+    box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    -webkit-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    -moz-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+    -o-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
+}
+/* checked mark aspect */
+[type="checkbox"]:not(:checked) + label:after,
+[type="checkbox"]:checked + label:after {
+    content: '✓';
+    position: absolute;
+    top: 0px; left: 2px;
+    font-size: 1.22em;
+    line-height: 1;
+    color: #f0f8ff;
+
+}
+/* checked mark aspect changes */
+[type="checkbox"]:not(:checked) + label:after {
+    display: none;
+}
+[type="checkbox"]:checked + label:after {
+    display: block;
+}
+
+
+
+
+#logIn, #signUp {
+    margin-top: 20%;
+}
+
+.cuenta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cuenta h2 {
+    margin-bottom: 10%;
+}
+
+.cuenta p {
+    font-size: 0.9em;
+}
+
+.input {
+    width: 45%;
+    margin-bottom: 5%;
+}
+
+.submit {
+    width: 35%;
+    margin-bottom: 5%;
+}
+
+#recordarme {
+    font-size: 0.9em;
+    margin-bottom: 5%;
+}
+
+#cerrarPanel {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+}
+
+#invalid, #wrong {
+    font-size: 0.8em;
+    margin: auto 13% 2%;
 }

@@ -4,13 +4,14 @@ let back;
 let mazo;
 let acesJugador = 0;
 let acesCasa = 0;
-let balance;
+let balance = 1000;
 let slider;
 let max;
 let apuesta;
 let hoy;
 let dia;
 let ayer;
+let rachaActual = 0;
 
 /* -------------------------------------------------------------------------- */
 /*                   Funciones para armar y mezclar el mazo                   */
@@ -95,7 +96,7 @@ function repartirCasa() {
 /*                         Funcion que maneja el range                        */
 /* -------------------------------------------------------------------------- */
 
-function range() {    
+function range() {
     slider = document.getElementById("myRange");
     apuesta = document.getElementById("apuesta");
     slider.addEventListener("wheel", function (e) {
@@ -108,13 +109,13 @@ function range() {
         e.preventDefault();
         e.stopPropagation();
     })
-    
+
     slider.oninput = function () {
         apuesta.innerText = this.value;
     }
     max = document.getElementById("myRange");
     max.setAttribute("max", balance);
-    }
+}
 
 /* -------------------------------------------------------------------------- */
 /*                                Boton apostar                               */
@@ -132,8 +133,7 @@ function apostar() {
     document.querySelector("#hagaApuesta").hidden = true;
     apuesta = slider.value;
     balance -= apuesta
-    document.getElementById("balance").innerText = balance;
-    localStorage.setItem("balance", balance);
+    updateBalance();
     jugar();
 }
 
@@ -235,14 +235,16 @@ let cartasJugador;
 let cartasCasa;
 let blackjackJugador;
 let blackjackCasa;
+
 function resultado() {
     cartelResultado = document.getElementById("resultado");
     cartasJugador = document.getElementsByClassName("cartaJ");
-    cartasCasa= document.getElementsByClassName("cartaC");
+    cartasCasa = document.getElementsByClassName("cartaC");
     blackjackJugador = false;
     blackjackCasa = false;
     if (puntosJugador === 21 & cartasJugador.length === 2) {
         blackjackJugador = true;
+        addBlackjack();
     }
     if (puntosCasa === 21 & cartasCasa.length === 1) {
         blackjackCasa = true;
@@ -251,16 +253,24 @@ function resultado() {
         cartelResultado.innerText = "¡Blackjack!";
         balance += parseInt(apuesta) * 2.5;
         balance = Math.ceil(balance);
+        addVictoria();
+        rachaMas();
     } else if (puntosJugador > 21 || (puntosCasa > puntosJugador & puntosCasa < 22) || (blackjackCasa === true & blackjackJugador != true)) {
         cartelResultado.innerText = "La casa gana";
+        addDerrota();
+        addRacha();
+        racha0();
     } else if (puntosJugador == puntosCasa) {
         cartelResultado.innerText = "Es un empate";
         balance += parseInt(apuesta);
+        addEmpate();
     } else {
         cartelResultado.innerText = "¡Usted gana!";
         balance += parseInt(apuesta) * 2;
+        addVictoria();
+        rachaMas();
     }
-    document.getElementById("balance").innerText = balance;
+    updateBalance();
     if (balance !== 0) {
         document.querySelector("#volverAJugar").hidden = false;
     } else {
@@ -273,7 +283,7 @@ function resultado() {
 
     document.querySelector("#resultado").hidden = false;
 
-    localStorage.setItem("balance", balance);
+    addRecord();
 }
 
 /* -------------------------------------------------------------------------- */
@@ -284,10 +294,6 @@ let btnVolverAJugar = document.getElementById("volverAJugar");
 btnVolverAJugar.addEventListener("click", volverAJugar);
 
 function volverAJugar() {
-    balance = parseInt(localStorage.getItem("balance"));
-    if (isNaN(balance)) {
-        balance = 1000;
-    }
     recompensa();
 
     let cartas = document.getElementsByTagName("img");
@@ -321,12 +327,12 @@ function volverAJugar() {
     apuesta.innerText = document.getElementById("myRange").value;
 
     if (balance === 0) {
-    apuesta = 0;
-    document.getElementById("apuesta").innerText = apuesta;
-    btnApostar.setAttribute("disabled", true);
-} else {
-    btnApostar.removeAttribute("disabled");
-}
+        apuesta = 0;
+        document.getElementById("apuesta").innerText = apuesta;
+        btnApostar.setAttribute("disabled", true);
+    } else {
+        btnApostar.removeAttribute("disabled");
+    }
 }
 
 /* -------------------------------------------------------------------------- */
@@ -334,11 +340,13 @@ function volverAJugar() {
 /* -------------------------------------------------------------------------- */
 let btnAbrirRecompensa = document.getElementById("abrirRecompensa");
 btnAbrirRecompensa.addEventListener("click", abrirRecompensa);
+
 function abrirRecompensa() {
     document.querySelector("#ventana-recompensa").hidden = false
 }
 let btnCerrarRecompensa = document.getElementById("cerrarRecompensa");
 btnCerrarRecompensa.addEventListener("click", cerrarRecompensa);
+
 function cerrarRecompensa() {
     document.querySelector("#ventana-recompensa").hidden = true;
 }
@@ -347,32 +355,33 @@ btnReclamar.addEventListener("click", reclamar);
 
 function reclamar() {
     balance += 1000;
-    document.getElementById("balance").innerText = balance;
-    localStorage.setItem("balance", balance);
+    updateBalance();
     localStorage.setItem("reclamar", 0)
     btnReclamar.setAttribute("disabled", true);
+    max = document.getElementById("myRange");
+    max.setAttribute("max", balance);
 }
 
 function recompensa() {
-fecha = new Date();
-dia = parseInt(fecha.getDay());
-hoy = localStorage.setItem("hoy", dia);
-ayer = parseInt(localStorage.getItem("ayer"));
-if (isNaN(ayer)) {
-    btnReclamar.setAttribute("disabled", true);
-    localStorage.setItem("reclamar", 0);
-} else if (dia == localStorage.getItem("ayer")) {
-    if (localStorage.getItem("reclamar") == 1) {
-        btnReclamar.removeAttribute("disabled");
+    fecha = new Date();
+    dia = parseInt(fecha.getDay());
+    hoy = localStorage.setItem("hoy", dia);
+    ayer = parseInt(localStorage.getItem("ayer"));
+    if (isNaN(ayer)) {
+        btnReclamar.setAttribute("disabled", true);
+        localStorage.setItem("reclamar", 0);
+    } else if (dia == localStorage.getItem("ayer")) {
+        if (localStorage.getItem("reclamar") == 1) {
+            btnReclamar.removeAttribute("disabled");
         } else {
             btnReclamar.setAttribute("disabled", true);
         }
-} else {
-    btnReclamar.removeAttribute("disabled");
-    localStorage.setItem("reclamar", 1);
-}
-ayer = dia
-localStorage.setItem("ayer", ayer)
+    } else {
+        btnReclamar.removeAttribute("disabled");
+        localStorage.setItem("reclamar", 1);
+    }
+    ayer = dia
+    localStorage.setItem("ayer", ayer)
 }
 
 /* -------------------------------------------------------------------------- */
@@ -381,12 +390,14 @@ localStorage.setItem("ayer", ayer)
 
 let btnReglas = document.getElementById("abrirReglas");
 btnReglas.addEventListener("click", abrirReglas);
+
 function abrirReglas() {
     document.querySelector("#ventana-reglas").hidden = false
 }
 
 let btnCerrarReglas = document.getElementById("cerrarReglas");
 btnCerrarReglas.addEventListener("click", cerrarReglas);
+
 function cerrarReglas() {
     document.querySelector("#ventana-reglas").hidden = true;
 }
@@ -399,20 +410,276 @@ let song = new Audio("./media/music/blackjack64.mp3");
 let isPlaying = false;
 let musica = document.getElementById("musica");
 musica.addEventListener("click", play);
+let svgSwap = document.getElementById("musica");
+
 function play() {
     isPlaying ? song.pause() : song.play();
-    isPlaying ? musica.innerHTML = "♫" : musica.innerHTML = "<del>♫</del>";
+    isPlaying ? svgSwap.setAttribute("id", "musica") : svgSwap.setAttribute("id", "nomusica");
 }
-song.onplaying = function() {
+song.onplaying = function () {
     isPlaying = true;
 }
-song.onpause = function() {
+song.onpause = function () {
     isPlaying = false;
 }
 song.addEventListener("ended", song.play);
 
+/* -------------------------------------------------------------------------- */
+/*                                   signUp                                   */
+/* -------------------------------------------------------------------------- */
+let inc = parseInt(localStorage.getItem("NOAccounts"));
+if (isNaN(inc)) {
+    inc = localStorage.setItem("NOAccounts", 0);
+    inc = parseInt(localStorage.getItem("NOAccounts"));
+}
+let signUpSubmit = document.getElementById("signUpSubmit");
+signUpSubmit.addEventListener("click", signUpCheck); //function(){signUp(inc)}
+let signUpName;
+let signUpPassword;
 
+function signUpCheck() {
+    let taken = false;
+    signUpName = document.getElementById("signUpName").value;
+    signUpPassword = document.getElementById("signUpPassword").value;
 
+    for (let index = 0; index < localStorage.length; index++) {
+        if (signUpName === localStorage.key(index)) {
+            taken = true;
+        }
+    }
+    if (signUpName.length < 4) {
+        document.getElementById("invalid").innerHTML = "Su nombre de usuario debe tener al menos cuatro caracteres";
+    } else if (signUpPassword.length < 4) {
+        document.getElementById("invalid").innerHTML = "Su contraseña debe tener al menos cuatro caracteres";
+    } else if (taken === true) {
+        document.getElementById("invalid").innerHTML = "Este nombre de usuario ya fue tomado";
+    } else {
+        document.getElementById("invalid").innerHTML = "";
+        signUp(inc);
+    }
+}
+
+function signUp(userID) {
+
+    let user = {
+        ID: userID,
+        password: signUpPassword
+    };
+    localStorage.setItem(signUpName, JSON.stringify(user));
+    newAccount(userID);
+    localStorage.setItem("NOAccounts", userID + 1);
+    inc += 1;
+    document.querySelector("#logIn").hidden = false;
+    document.querySelector("#signUp").hidden = true;
+}
+
+let iniciar = document.getElementById("inicia");
+iniciar.addEventListener("click", function () {
+    document.querySelector("#logIn").hidden = false;
+    document.querySelector("#signUp").hidden = true;
+})
+
+function newAccount(userID) {
+    let newAccount = {
+        blackjacks: 0,
+        racha: 0,
+        victorias: 0,
+        derrotas: 0,
+        empates: 0,
+        record: 0,
+        balance: 1000
+    }
+    localStorage.setItem("stats" + userID, JSON.stringify(newAccount));
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    logIn                                   */
+/* -------------------------------------------------------------------------- */
+let userData;
+let loggedUserStats;
+let registrarse = document.getElementById("registrate");
+registrarse.addEventListener("click", function () {
+    document.querySelector("#logIn").hidden = true;
+    document.querySelector("#signUp").hidden = false;
+})
+
+let logInSubmit = document.getElementById("logInSubmit");
+logInSubmit.addEventListener("click", logIn);
+
+let logInName;
+let logInPassword
+
+function logIn() {
+    logInName = document.getElementById("logInName");
+    logInPassword = document.getElementById("logInPassword");
+
+    for (let i = 0; i < localStorage.length; i++) {
+        if (logInName.value === localStorage.key(i)) {
+            userData = JSON.parse(localStorage.getItem(logInName.value))
+            if (logInPassword.value === userData["password"]) {
+                loggedUserStats = JSON.parse(localStorage.getItem("stats" + userData["ID"]))
+                document.querySelector("#logIn").hidden = true;
+                document.querySelector("#stats").hidden = false;
+
+                document.getElementById("blackjacks").innerHTML = loggedUserStats["blackjacks"];
+                document.getElementById("racha").innerHTML = loggedUserStats["racha"];
+                document.getElementById("victorias").innerHTML = loggedUserStats["victorias"];
+                document.getElementById("derrotas").innerHTML = loggedUserStats["derrotas"];
+                document.getElementById("empates").innerHTML = loggedUserStats["empates"];
+                document.getElementById("record").innerHTML = loggedUserStats["record"];
+                document.getElementById("balance").innerHTML = loggedUserStats["balance"];
+                balance = loggedUserStats["balance"];
+
+                let btnCheck = document.querySelector("#btnCheck");
+                if (btnCheck.checked === true) {
+                    localStorage.setItem("remember", "yes");
+                    localStorage.setItem("sessionName", logInName.value);
+                    localStorage.setItem("sessionPassword", logInPassword.value);
+                } else {
+                    localStorage.setItem("remember", "no");
+                    localStorage.removeItem("sessionName");
+                    localStorage.removeItem("sessionPassword");
+                }
+                document.getElementById("wrong").innerHTML = "";
+
+                volverAJugar();
+                range();
+            } else {
+                document.getElementById("wrong").innerHTML = "Contraseña incorrecta";
+            } break
+        } if (logInName.value != localStorage.key(i)) {
+            document.getElementById("wrong").innerHTML = "Este usuario no existe";
+        }
+    }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    stats                                   */
+/* -------------------------------------------------------------------------- */
+
+function addBlackjack() {
+    if (loggedUserStats != undefined) {
+        loggedUserStats["blackjacks"] += 1;
+        updateStats();
+        document.getElementById("blackjacks").innerHTML = loggedUserStats["blackjacks"];
+    }
+}
+
+function rachaMas() {
+    if (loggedUserStats != undefined) {
+        rachaActual += 1;
+    }
+    addRacha();
+}
+
+function racha0() {
+    if (loggedUserStats != undefined) {
+        rachaActual = 0;
+    }
+}
+
+function addRacha() {
+    if (loggedUserStats != undefined) {
+        if (rachaActual > loggedUserStats["racha"]) {
+            loggedUserStats["racha"] = rachaActual;
+            updateStats();
+            document.getElementById("racha").innerHTML = loggedUserStats["racha"];
+        }
+    }
+}
+
+function addVictoria() {
+    if (loggedUserStats != undefined) {
+        loggedUserStats["victorias"] += 1;
+        updateStats();
+        document.getElementById("victorias").innerHTML = loggedUserStats["victorias"];
+    }
+}
+
+function addDerrota() {
+    if (loggedUserStats != undefined) {
+        loggedUserStats["derrotas"] += 1;
+        updateStats();
+        document.getElementById("derrotas").innerHTML = loggedUserStats["derrotas"];
+    }
+}
+
+function addEmpate() {
+    if (loggedUserStats != undefined) {
+        loggedUserStats["empates"] += 1;
+        updateStats();
+        document.getElementById("empates").innerHTML = loggedUserStats["empates"];
+    }
+}
+
+function addRecord() {
+    if (loggedUserStats != undefined) {
+        if (balance > loggedUserStats["record"]) {
+            loggedUserStats["record"] = balance;
+            updateStats();
+            document.getElementById("record").innerHTML = loggedUserStats["record"];
+        }
+    }
+}
+
+function updateBalance() {
+    if (loggedUserStats != undefined) {
+        loggedUserStats["balance"] = balance;
+    } else {
+
+    }
+    document.getElementById("balance").innerText = balance;
+}
+
+function updateStats() {
+    localStorage.setItem("stats" + userData["ID"], JSON.stringify(loggedUserStats));
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                  sidepanel                                 */
+/* -------------------------------------------------------------------------- */
+
+let btnUser = document.getElementById("user");
+btnUser.addEventListener("click", abrirPanel);
+
+function abrirPanel() {
+    document.querySelector("#sidepanel").hidden = false;
+}
+let btnCerrarPanel = document.getElementById("cerrarPanel")
+btnCerrarPanel.addEventListener("click", cerrarPanel)
+
+function cerrarPanel() {
+    document.querySelector("#sidepanel").hidden = true;
+}
+
+let btnLogOf = document.getElementById("logOf");
+btnLogOf.addEventListener("click", logOf);
+
+function logOf() {
+    loggedUserStats = undefined;
+    localStorage.setItem("remember", "no");
+    localStorage.removeItem("sessionName");
+    localStorage.removeItem("sessionPassword");
+    document.querySelector("#stats").hidden = true;
+    document.querySelector("#logIn").hidden = false;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   onload                                   */
+/* -------------------------------------------------------------------------- */
+logInName = document.getElementById("logInName");
+logInPassword = document.getElementById("logInPassword");
+let sessionName = localStorage.getItem("sessionName");
+let sessionPassword = localStorage.getItem("sessionPassword");
+let remember = localStorage.getItem("remember");
+
+function autoLogIn() {
+    if (remember === "yes") {
+        logInName.setAttribute("value", sessionName);
+        logInPassword.setAttribute("value", sessionPassword);
+        logIn();
+    }
+}
 
 
 btnReclamar.setAttribute("disabled", true);
@@ -420,3 +687,9 @@ volverAJugar();
 range();
 document.querySelector("#ventana-reglas").hidden = true;
 document.querySelector("#ventana-recompensa").hidden = true;
+document.querySelector("#sidepanel").hidden = true;
+document.querySelector("#logIn").hidden = false;
+document.querySelector("#signUp").hidden = true;
+document.querySelector("#stats").hidden = true;
+
+autoLogIn();
