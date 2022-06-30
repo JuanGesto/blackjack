@@ -125,7 +125,7 @@ h4 {
     animation-name: carteles-fade;
     animation-duration: 6s;
 }
-
+/*
 @keyframes carteles-fade {
     0% {
         opacity: 0%;
@@ -137,7 +137,7 @@ h4 {
         opacity: 0%;
     }
 }
-
+*/
 /* -------------------------------------------------------------------------- */
 /*                                    menu                                    */
 /* -------------------------------------------------------------------------- */
@@ -280,11 +280,13 @@ h4 {
     left: 0;
     width: 20%;
     height: 100%;
-    background: linear-gradient(170deg, rgb(47, 99, 53) 0%, rgba(32, 32, 32) 100%);;
+    background-color: #00000031;
     box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
     -webkit-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
     -moz-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
     -o-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
+    backdrop-filter: blur( 20px );
+    -webkit-backdrop-filter: blur( 3px );
 }
 
 .input {
@@ -304,7 +306,7 @@ h4 {
 .submit {
     font-family: 'Lora', serif;
     color: #f0f8ff;
-    background: linear-gradient(170deg, rgba(47, 99, 53, 0.507) 0%, rgba(32, 32, 32) 100%);
+    background: #00000038;
     box-shadow: 2px 2px 6px #0000008f, -2px -2px 6px #00000000;
     -webkit-box-shadow: 2px 2px 6px #0000008f, -2px -2px 6px #00000000;
     -moz-box-shadow: 2px 2px 6px #0000008f, -2px -2px 6px #00000000;
@@ -373,7 +375,7 @@ h4 {
 
 
 #logIn, #signUp {
-    margin-top: 20%;
+    margin-top: 30%;
 }
 
 .cuenta {
@@ -415,4 +417,30 @@ h4 {
 #invalid, #wrong {
     font-size: 0.8em;
     margin: auto 13% 2%;
+}
+
+#stats {
+    margin-top: 30%;
+}
+
+#estadisticas {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#estadisticas h3 {
+    margin-bottom: 10%;
+    font-size: 2.5em;
+}
+
+#estadisticas p {
+    margin-top: 2%;
+    font-size: 1.25em;
+}
+
+#logOf {
+    position: absolute;
+    bottom: 2em;
 }
