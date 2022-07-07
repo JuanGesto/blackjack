@@ -32,10 +32,13 @@
     align-items: center;
     background-color: #000000bd;
     width: 18em;
-    height: 12em;
     padding: 1% 2%;
     text-align: justify;
     border-radius: 2%;
+}
+
+#disponible {
+    font-size: 0.9em;
 }
 
 .row1 {
@@ -46,6 +49,7 @@
 
 #reclamar {
     height: 1.7em;
+    margin: 0.5em auto;
     font-size: 1.3em;
     font-family: 'Lora', serif;
     border-radius: 90% 90% 90% 90% / 80% 80% 80% 80%;

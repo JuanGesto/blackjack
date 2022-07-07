@@ -374,6 +374,7 @@ function reclamar() {
     max = document.getElementById("myRange");
     max.setAttribute("max", balance);
     tooltipRecompensa.removeAttribute("data-show");
+    document.querySelector("#disponible").hidden = false;
 
     if (balance === 1000 & balance0 === true) {
         document.querySelector("#volverAJugar").hidden = false;
@@ -394,8 +395,10 @@ function recompensa() {
             btnReclamar.removeAttribute("disabled");
             tooltipRecompensa.setAttribute("data-show", "");
             popperRecompensa.update();
+            document.querySelector("#disponible").hidden = true;
         } else {
             btnReclamar.setAttribute("disabled", true);
+            document.querySelector("#disponible").hidden = false;
         }
     } else {
         btnReclamar.removeAttribute("disabled");
@@ -403,6 +406,7 @@ function recompensa() {
         updateStats();
         tooltipRecompensa.setAttribute("data-show", "");
         popperRecompensa.update();
+        document.querySelector("#disponible").hidden = true;
     }
     loggedUserStats["ayer"] = dia;
     updateStats();
