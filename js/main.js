@@ -72,7 +72,9 @@ function repartirJugador() {
         puntosJugador -= 10;
         acesJugador -= 1;
     }
-    document.getElementById("puntos-jugador").innerText = puntosJugador;
+
+    cartaImg.onload = () =>{document.getElementById("puntos-jugador").innerText = puntosJugador;}
+    
 }
 
 function repartirCasa() {
@@ -91,7 +93,7 @@ function repartirCasa() {
         puntosCasa -= 10;
         acesCasa -= 1;
     }
-    document.getElementById("puntos-casa").innerText = puntosCasa;
+    cartaImg.onload = () =>{document.getElementById("puntos-casa").innerText = puntosCasa;}
 }
 
 /* -------------------------------------------------------------------------- */
