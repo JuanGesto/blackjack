@@ -33,6 +33,10 @@ h4 {
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
 }
 
+#cartas-casa, #cartas-jugador {
+  height: 25vh;
+}
+
 #pedir,
 #parar,
 #apostar {
@@ -46,6 +50,7 @@ h4 {
   -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
   -moz-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
   -o-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
+  margin-top: 5px;
 }
 
 #apostar {
@@ -126,17 +131,40 @@ h4 {
   margin: 0.5%;
 }
 
-#carteles {
+#resultado, #hagaApuesta {
   width: 50%;
+  font-size: 1.3em;
   position: absolute;
   left: 25%;
   top: 25%;
   background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8407738095) 25%, rgba(0, 0, 0, 0.8407738095) 75%, rgba(0, 0, 0, 0) 100%);
-  animation-name: carteles-fade;
-  animation-duration: 6s;
+  animation: disappear 0.5s;
+  animation-fill-mode: forwards;
 }
 
-#reglas-container, #recompensa-container {
+#resultado[data-show], #hagaApuesta[data-show] {
+  animation: appear 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+@keyframes disappear {
+  0% {
+    opacity: 100%;
+  }
+  100% {
+    opacity: 0%;
+  }
+}
+#reglas-container,
+#recompensa-container {
   width: 100%;
   height: 80%;
   position: absolute;
@@ -194,7 +222,8 @@ h4 {
   -o-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
 }
 
-.cerrar, .boton {
+.cerrar,
+.boton {
   width: 1.5em;
   height: 1.5em;
   font-size: 1.3em;
@@ -207,11 +236,13 @@ h4 {
   -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5607843137), -2px -2px 6px rgba(0, 0, 0, 0);
   -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5607843137), -2px -2px 6px rgba(0, 0, 0, 0);
 }
-.cerrar:hover, .boton:hover {
+.cerrar:hover,
+.boton:hover {
   filter: brightness(130%);
   transition: all 0.2s;
 }
-.cerrar:active, .boton:active {
+.cerrar:active,
+.boton:active {
   filter: brightness(120%);
   box-shadow: inset 5px 5px 12px rgba(0, 0, 0, 0.3960784314), inset -5px -5px 12px rgba(0, 0, 0, 0);
   -webkit-box-shadow: inset 5px 5px 12px rgba(0, 0, 0, 0.3960784314), inset -5px -5px 12px rgba(0, 0, 0, 0);
@@ -266,6 +297,56 @@ h4 {
   background-size: 55%;
 }
 
+/* -------------------------------------------------------------------------- */
+/*                                  tooltips                                  */
+/* -------------------------------------------------------------------------- */
+#tooltipRecompensa {
+  background: rgb(27, 26, 26);
+  color: aliceblue;
+  font-weight: bold;
+  padding: 4px 8px;
+  font-size: 13px;
+  border-radius: 4px;
+  animation: bounce 1.5s;
+  animation-iteration-count: infinite;
+  display: none;
+}
+
+#tooltipRecompensa[data-show] {
+  display: block;
+}
+
+#arrow,
+#arrow::before {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: inherit;
+}
+
+#arrow {
+  visibility: hidden;
+}
+
+#arrow::before {
+  visibility: visible;
+  content: "";
+  transform: rotate(45deg);
+}
+
+#tooltipRecompensa[data-popper-placement^=bottom] > #arrow {
+  top: -4px;
+}
+
+#tooltipRecompensa[data-popper-placement^=right] > #arrow {
+  left: -4px;
+}
+
+@keyframes bounce {
+  50% {
+    transform: translate(13%, 45px);
+  }
+}
 #sidepanel {
   position: absolute;
   top: 0;

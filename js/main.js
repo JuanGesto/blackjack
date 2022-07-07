@@ -72,6 +72,7 @@ function repartirJugador() {
         puntosJugador -= 10;
         acesJugador -= 1;
     }
+    document.getElementById("puntos-jugador").innerText = puntosJugador;
 }
 
 function repartirCasa() {
@@ -90,6 +91,7 @@ function repartirCasa() {
         puntosCasa -= 10;
         acesCasa -= 1;
     }
+    document.getElementById("puntos-casa").innerText = puntosCasa;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -130,7 +132,7 @@ function apostar() {
     document.querySelector("#parar").hidden = false;
     document.querySelector("#pedir").hidden = false;
     document.querySelector("#contenido").hidden = false;
-    document.querySelector("#hagaApuesta").hidden = true;
+    document.querySelector("#hagaApuesta").removeAttribute("data-show");
     apuesta = slider.value;
     balance -= apuesta
     updateBalance();
@@ -143,11 +145,10 @@ function apostar() {
 /* -------------------------------------------------------------------------- */
 
 function jugar() {
-    repartirJugador();
-    repartirCasa();
-    document.getElementById("puntos-casa").innerText = puntosCasa;
-    repartirJugador();
-
+    setTimeout(repartirJugador, 500);
+    setTimeout(repartirCasa, 1500);
+    setTimeout(repartirJugador, 2500);
+    setTimeout(() => {
     back = mazo.shift();
     puntosCasa += getValor(back);
 
@@ -164,7 +165,6 @@ function jugar() {
         acesCasa -= 1;
     }
 
-    document.getElementById("puntos-jugador").innerText = puntosJugador;
 
     document.querySelector("#pedir").hidden = false;
     document.querySelector("#parar").hidden = false;
@@ -172,6 +172,7 @@ function jugar() {
     if (puntosJugador > 20) {
         parar();
     }
+}, 3500)
 }
 
 /* -------------------------------------------------------------------------- */
@@ -192,7 +193,7 @@ function pedir() {
     document.getElementById("puntos-jugador").innerText = puntosJugador;
 
     if (puntosJugador > 20) {
-        parar();
+        setTimeout(parar, 500);
     }
 }
 
@@ -214,17 +215,18 @@ function parar() {
     document.getElementById("cartas-casa").append(cartaImg);
     document.getElementById("puntos-casa").innerText = puntosCasa;
 
-    while (puntosCasa < 17) {
-        repartirCasa();
-
-        if (puntosCasa > 21 && acesCasa > 0) {
-            puntosCasa -= 10;
-            acesCasa -= 1;
+    const interval = setInterval(() => {
+        if (puntosCasa < 17) {
+            repartirCasa();
+        } else {
+            clearInterval(interval);
+            setTimeout(resultado, 500);
         }
-
-        document.getElementById("puntos-casa").innerText = puntosCasa;
+    }, 1000)
+    /*while (puntosCasa < 17) {
+        setTimeout(repartirCasa, 250);
     }
-    setTimeout(resultado, 1000);
+    setTimeout(resultado, 1000);*/
 }
 
 /* -------------------------------------------------------------------------- */
@@ -235,6 +237,7 @@ let cartasJugador;
 let cartasCasa;
 let blackjackJugador;
 let blackjackCasa;
+let balance0 = false;
 
 function resultado() {
     cartelResultado = document.getElementById("resultado");
@@ -260,6 +263,9 @@ function resultado() {
         addDerrota();
         addRacha();
         racha0();
+        if (balance === 0) {
+            balance0 = true;
+        }
     } else if (puntosJugador == puntosCasa) {
         cartelResultado.innerText = "Es un empate";
         balance += parseInt(apuesta);
@@ -281,7 +287,7 @@ function resultado() {
     max.setAttribute("max", balance);
     apuesta.innerHTML = slider.value;
 
-    document.querySelector("#resultado").hidden = false;
+    document.querySelector("#resultado").setAttribute("data-show", "");
 
     addRecord();
 }
@@ -294,7 +300,9 @@ let btnVolverAJugar = document.getElementById("volverAJugar");
 btnVolverAJugar.addEventListener("click", volverAJugar);
 
 function volverAJugar() {
-    recompensa();
+    if (loggedUserStats != undefined) {
+        recompensa();
+    }
 
     let cartas = document.getElementsByTagName("img");
     while (cartas.length !== 0) {
@@ -305,13 +313,15 @@ function volverAJugar() {
     puntosJugador = 0;
     acesJugador = 0;
     acesCasa = 0;
-
+    document.getElementById("puntos-jugador").innerText = "";
+    document.getElementById("puntos-casa").innerText = "";
+    
     document.querySelector("#volverAJugar").hidden = true;
     document.querySelector("#parar").hidden = true;
     document.querySelector("#pedir").hidden = true;
     document.querySelector("#contenido").hidden = true;
-    document.querySelector("#hagaApuesta").hidden = false;
-    document.querySelector("#resultado").hidden = true;
+    document.querySelector("#hagaApuesta").setAttribute("data-show", "");
+    document.querySelector("#resultado").removeAttribute("data-show");
 
     armarMazo();
     mezclarMazo();
@@ -355,10 +365,18 @@ btnReclamar.addEventListener("click", reclamar);
 function reclamar() {
     balance += 1000;
     updateBalance();
-    localStorage.setItem("reclamar", 0)
+    loggedUserStats["reclamar"] = 0;
+    updateStats();
     btnReclamar.setAttribute("disabled", true);
+    btnApostar.removeAttribute("disabled");
     max = document.getElementById("myRange");
     max.setAttribute("max", balance);
+    tooltipRecompensa.removeAttribute("data-show");
+
+    if (balance === 1000 & balance0 === true) {
+        document.querySelector("#volverAJugar").hidden = false;
+        balance0 = false;
+    }
 }
 
 function recompensa() {
@@ -367,22 +385,37 @@ function recompensa() {
     hoy = localStorage.setItem("hoy", dia);
     if (isNaN(ayer)) {
         btnReclamar.setAttribute("disabled", true);
-        localStorage.setItem("reclamar", 0);
-    } else if (dia == ayer) {
-        if (localStorage.getItem("reclamar") == 1) {
+        loggedUserStats["reclamar"] = 0;
+        updateStats();
+    } else if (dia === ayer) {
+        if (loggedUserStats["reclamar"] == 1) {
             btnReclamar.removeAttribute("disabled");
+            tooltipRecompensa.setAttribute("data-show", "");
+            popperRecompensa.update();
         } else {
             btnReclamar.setAttribute("disabled", true);
         }
     } else {
         btnReclamar.removeAttribute("disabled");
-        localStorage.setItem("reclamar", 1);
-    }
-    if (loggedUserStats != undefined) {
-        loggedUserStats["ayer"] = dia;
+        loggedUserStats["reclamar"] = 1;
         updateStats();
+        tooltipRecompensa.setAttribute("data-show", "");
+        popperRecompensa.update();
     }
+    loggedUserStats["ayer"] = dia;
+    updateStats();
 }
+
+const tooltipRecompensa = document.getElementById("tooltipRecompensa");
+const popperRecompensa = Popper.createPopper(btnAbrirRecompensa, tooltipRecompensa, {
+    placement: "bottom",
+    modifiers: [{
+        name: "offset",
+        options: {
+            offset: [0, 8],
+        },
+    }, ],
+});
 
 /* -------------------------------------------------------------------------- */
 /*                                   Reglas                                   */
@@ -443,7 +476,7 @@ function signUpCheck() {
     signUpPassword = document.getElementById("signUpPassword").value;
 
     for (let index = 0; index < NOAccounts; index++) {
-        if (signUpName === (JSON.parse(localStorage.getItem("user"+index))[0].username)) {
+        if (signUpName === (JSON.parse(localStorage.getItem("user" + index))[0].username)) {
             taken = true;
         }
     }
@@ -459,9 +492,13 @@ function signUpCheck() {
     }
 }
 const newUser = [];
+
 function signUp(userID) {
 
-    newUser.push ({username: signUpName, password: signUpPassword});
+    newUser.push({
+        username: signUpName,
+        password: signUpPassword
+    });
     newAccount(userID);
     localStorage.setItem("NOAccounts", userID + 1);
     NOAccounts += 1;
@@ -476,7 +513,17 @@ iniciar.addEventListener("click", function () {
 })
 
 function newAccount(userID) {
-    newUser.push({blackjacks: 0, racha: 0, victorias: 0, derrotas: 0, empates: 0, record: 0, balance: 1000, ayer})
+    newUser.push({
+        blackjacks: 0,
+        racha: 0,
+        victorias: 0,
+        derrotas: 0,
+        empates: 0,
+        record: 0,
+        balance: 1000,
+        ayer,
+        reclamar: 0,
+    })
     localStorage.setItem("user" + userID, JSON.stringify(newUser));
 }
 
@@ -503,13 +550,13 @@ function logIn() {
     logInName = document.getElementById("logInName");
     logInPassword = document.getElementById("logInPassword");
     for (let i = 0; i < NOAccounts; i++) {
-        userData = JSON.parse(localStorage.getItem("user"+i))
+        userData = JSON.parse(localStorage.getItem("user" + i))
         let tempObject = userData[0];
         let tempUserName = tempObject.username;
         if (logInName.value === tempUserName) {
             let tempPassword = tempObject.password
             if (logInPassword.value === tempPassword) {
-                loggedUser = "user"+i;
+                loggedUser = "user" + i;
                 document.getElementById("userName").innerHTML = logInName.value;
                 loggedUserStats = userData[1]
                 document.querySelector("#logIn").hidden = true;
@@ -523,17 +570,19 @@ function logIn() {
                 document.getElementById("record").innerHTML = loggedUserStats["record"];
                 document.getElementById("balance").innerHTML = loggedUserStats["balance"];
                 balance = loggedUserStats["balance"];
-                ayer = loggedUserStats["ayer"];
+                ayer = parseInt(loggedUserStats["ayer"]);
 
                 let btnCheck = document.querySelector("#btnCheck");
-                if (btnCheck.checked === true) {
-                    localStorage.setItem("remember", "yes");
-                    localStorage.setItem("sessionName", logInName.value);
-                    localStorage.setItem("sessionPassword", logInPassword.value);
-                } else {
-                    localStorage.setItem("remember", "no");
-                    localStorage.removeItem("sessionName");
-                    localStorage.removeItem("sessionPassword");
+                if (localStorage.getItem("remember") === "no") {
+                    if (btnCheck.checked === true) {
+                        localStorage.setItem("remember", "yes");
+                        localStorage.setItem("sessionName", logInName.value);
+                        localStorage.setItem("sessionPassword", logInPassword.value);
+                    } else {
+                        localStorage.setItem("remember", "no");
+                        localStorage.removeItem("sessionName");
+                        localStorage.removeItem("sessionPassword");
+                    }
                 }
                 document.getElementById("wrong").innerHTML = "";
 
@@ -541,8 +590,10 @@ function logIn() {
                 range();
             } else {
                 document.getElementById("wrong").innerHTML = "Contraseña incorrecta";
-            } break
-        } if (logInName.value != localStorage.key(i)) {
+            }
+            break
+        }
+        if (logInName.value != localStorage.key(i)) {
             document.getElementById("wrong").innerHTML = "Este usuario no existe";
         }
     }
@@ -559,17 +610,20 @@ function addBlackjack() {
         document.getElementById("blackjacks").innerHTML = loggedUserStats["blackjacks"];
     }
 }
+
 function rachaMas() {
     if (loggedUserStats != undefined) {
         rachaActual += 1;
     }
     addRacha();
 }
+
 function racha0() {
     if (loggedUserStats != undefined) {
         rachaActual = 0;
     }
 }
+
 function addRacha() {
     if (loggedUserStats != undefined) {
         if (rachaActual > loggedUserStats["racha"]) {
@@ -579,6 +633,7 @@ function addRacha() {
         }
     }
 }
+
 function addVictoria() {
     if (loggedUserStats != undefined) {
         loggedUserStats["victorias"] += 1;
@@ -586,6 +641,7 @@ function addVictoria() {
         document.getElementById("victorias").innerHTML = loggedUserStats["victorias"];
     }
 }
+
 function addDerrota() {
     if (loggedUserStats != undefined) {
         loggedUserStats["derrotas"] += 1;
@@ -593,6 +649,7 @@ function addDerrota() {
         document.getElementById("derrotas").innerHTML = loggedUserStats["derrotas"];
     }
 }
+
 function addEmpate() {
     if (loggedUserStats != undefined) {
         loggedUserStats["empates"] += 1;
@@ -600,6 +657,7 @@ function addEmpate() {
         document.getElementById("empates").innerHTML = loggedUserStats["empates"];
     }
 }
+
 function addRecord() {
     if (loggedUserStats != undefined) {
         if (balance > loggedUserStats["record"]) {
@@ -609,6 +667,7 @@ function addRecord() {
         }
     }
 }
+
 function updateBalance() {
     if (loggedUserStats != undefined) {
         loggedUserStats["balance"] = balance;
@@ -618,6 +677,7 @@ function updateBalance() {
     }
     document.getElementById("balance").innerText = balance;
 }
+
 function updateStats() {
     userData.pop();
     userData.push(loggedUserStats);
@@ -645,12 +705,16 @@ let btnLogOf = document.getElementById("logOf");
 btnLogOf.addEventListener("click", logOf);
 
 function logOf() {
+    loggedUser = undefined;
     loggedUserStats = undefined;
     localStorage.setItem("remember", "no");
     localStorage.removeItem("sessionName");
     localStorage.removeItem("sessionPassword");
     document.querySelector("#stats").hidden = true;
     document.querySelector("#logIn").hidden = false;
+    btnReclamar.setAttribute("disabled", true);
+    tooltipRecompensa.removeAttribute("data-show");
+    volverAJugar();
 }
 
 /* -------------------------------------------------------------------------- */

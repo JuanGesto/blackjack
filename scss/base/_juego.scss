@@ -5,6 +5,10 @@
     box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
 }
 
+#cartas-casa, #cartas-jugador {
+    height: 25vh;
+}
+
 #pedir,
 #parar,
 #apostar {
@@ -18,6 +22,7 @@
     -webkit-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
     -moz-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
     -o-box-shadow: 5px 5px 10px #0000008f, -5px -5px 10px #00000000;
+    margin-top: 5px;
 }
 
 #apostar {
@@ -102,12 +107,36 @@
     margin: 0.5%;
 }
 
-#carteles {
+#resultado, #hagaApuesta {
     width: 50%;
+    font-size: 1.3em;
     position: absolute;
     left: 25%;
     top: 25%;
     background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8407738095238095) 25%, rgba(0, 0, 0, 0.8407738095238095) 75%, rgba(0, 0, 0, 0) 100%);
-    animation-name: carteles-fade;
-    animation-duration: 6s;
+    animation: disappear 0.5s;
+    animation-fill-mode: forwards;
+}
+
+#resultado[data-show], #hagaApuesta[data-show] {
+    animation: appear 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0%;
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+
+@keyframes disappear {
+    0% {
+        opacity: 100%;
+    }
+    100% {
+        opacity: 0%;
+    }
 }

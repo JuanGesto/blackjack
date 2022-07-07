@@ -24,8 +24,12 @@
             <button id="abrirReglas" class="boton"></button>
             <button id="musica" class="boton"></button>
             <button id="abrirRecompensa" class="boton"></button>
+            <div id="tooltipRecompensa" class="tooltips" role="tooltip">Recompensa disponible
+                <div id="arrow" data-popper-arrow></div>
+            </div>
+
             <button id="user" class="boton"></button>
-            
+
         </div>
 
         <!-- ----------------------------------------------------------------------- -->
@@ -64,8 +68,8 @@
         </div>
 
         <div id="carteles">
-            <h2 id="hagaApuesta">Haga su apuesta</h2>
-            <h2 id="resultado">¡Usted gana!</h2>
+            <div id="hagaApuesta" class="tooltips" role="tooltip">Haga su apuesta</div>
+            <div id="resultado" class="tooltips" role="tooltip">¡Usted gana!</h2>
         </div>
 
     </main>
@@ -128,54 +132,55 @@
         </div>
     </section>
 
-<!-- ----------------------------------------------------------------------- -->
-<!--                                sidepanel                                -->
-<!-- ----------------------------------------------------------------------- -->
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                                sidepanel                                -->
+    <!-- ----------------------------------------------------------------------- -->
 
     <section id="sidepanel">
         <button id="cerrarPanel" class="cerrar"> X </button>
         <div id="logIn">
             <div class="cuenta">
-            <h2>Inicia sesión</h2>
-            <p id="wrong"></p>
-            <input type="text" placeholder="Nombre de usuario" id="logInName" class="input">
-            <input type="password" placeholder="Contraseña" id="logInPassword" class="input">
-            <input type="submit" id="logInSubmit" class="submit" value="Iniciar sesión">
-            <div id="recordarme">
-            <input type="checkbox" id="btnCheck" value="Guardar"  class="check">
-            <label for="btnCheck">Recordarme</label>
+                <h2>Inicia sesión</h2>
+                <p id="wrong"></p>
+                <input type="text" placeholder="Nombre de usuario" id="logInName" class="input">
+                <input type="password" placeholder="Contraseña" id="logInPassword" class="input">
+                <input type="submit" id="logInSubmit" class="submit" value="Iniciar sesión">
+                <div id="recordarme">
+                    <input type="checkbox" id="btnCheck" value="Guardar" class="check">
+                    <label for="btnCheck">Recordarme</label>
+                </div>
+                <p>¿No tenés una cuenta?</p>
+                <p id="registrate">Registrate.</p>
             </div>
-            <p>¿No tenés una cuenta?</p>
-            <p id="registrate">Registrate.</p>
-        </div>
         </div>
         <div id="signUp">
             <div class="cuenta">
-            <h2>Crea una cuenta</h2>
-            <p id="invalid"></p>
-            <input type="text" placeholder="Nombre de usuario" id="signUpName" minlength="4" class="input">
-            <input type="password" placeholder="Contraseña" id="signUpPassword" minlength="4" class="input">
-            <input type="submit" id="signUpSubmit" class="submit" value="Registrarse">
-            <p>¿Ya tenés una cuenta?</p>
-            <p id="inicia">Iniciá sesión.</p>
-        </div>
+                <h2>Crea una cuenta</h2>
+                <p id="invalid"></p>
+                <input type="text" placeholder="Nombre de usuario" id="signUpName" minlength="4" class="input">
+                <input type="password" placeholder="Contraseña" id="signUpPassword" minlength="4" class="input">
+                <input type="submit" id="signUpSubmit" class="submit" value="Registrarse">
+                <p>¿Ya tenés una cuenta?</p>
+                <p id="inicia">Iniciá sesión.</p>
+            </div>
         </div>
         <div id="stats">
             <div id="estadisticas">
-            <h3 id="name"><span id="userName"></span></h3>
-            <p>Blackjacks: <span id="blackjacks"></span></p>
-            <p>Racha: <span id="racha"></span></p>
-            <p>Victorias: <span id="victorias"></span></p>
-            <p>Derrotas: <span id="derrotas"></span></p>
-            <p>Empates: <span id="empates"></span></p>
-            <p>Record: <span id="record"></span></p>
+                <h3 id="name"><span id="userName"></span></h3>
+                <p>Blackjacks: <span id="blackjacks"></span></p>
+                <p>Racha: <span id="racha"></span></p>
+                <p>Victorias: <span id="victorias"></span></p>
+                <p>Derrotas: <span id="derrotas"></span></p>
+                <p>Empates: <span id="empates"></span></p>
+                <p>Record: <span id="record"></span></p>
 
-            <button id="logOf" class="submit">Cerrar sesión</button>
+                <button id="logOf" class="submit">Cerrar sesión</button>
             </div>
         </div>
     </section>
 
     <!-- JS -->
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="js/main.js"></script>
 </body>
 

@@ -1,4 +1,5 @@
-#reglas-container, #recompensa-container {
+#reglas-container,
+#recompensa-container {
     width: 100%;
     height: 80%;
     position: absolute;
@@ -36,7 +37,8 @@
     text-align: justify;
     border-radius: 2%;
 }
-.row1{
+
+.row1 {
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -56,7 +58,8 @@
 }
 
 
-.cerrar, .boton {
+.cerrar,
+.boton {
     width: 1.5em;
     height: 1.5em;
     font-size: 1.3em;
@@ -73,8 +76,9 @@
         filter: brightness(130%);
         transition: all 0.2s;
     }
+
     &:active {
-        filter: brightness(120%);    
+        filter: brightness(120%);
         box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
         -webkit-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
         -moz-box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
@@ -83,7 +87,7 @@
     }
 }
 
-#menu{
+#menu {
     position: absolute;
     top: 20px;
     left: 20px;
@@ -96,6 +100,7 @@
     background-position: center;
     background-size: 35%;
 }
+
 #musica {
     background-color: #00000038;
     background-image: url(../media/music.svg);
@@ -103,6 +108,7 @@
     background-position: center;
     background-size: 50%;
 }
+
 #nomusica {
     background-color: #00000038;
     background-image: url(../media/music-crossed.svg);
@@ -110,6 +116,7 @@
     background-position: center;
     background-size: 50%;
 }
+
 #abrirRecompensa {
     background-color: #00000038;
     background-image: url(../media/money.svg);
@@ -117,10 +124,66 @@
     background-position: center;
     background-size: 35%;
 }
+
 #user {
     background-color: #00000038;
     background-image: url(../media/user.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 55%;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                  tooltips                                  */
+/* -------------------------------------------------------------------------- */
+
+#tooltipRecompensa {
+    background: rgb(27, 26, 26);
+    color: aliceblue;
+    font-weight: bold;
+    padding: 4px 8px;
+    font-size: 13px;
+    border-radius: 4px;
+    animation: bounce 1.5s;
+    animation-iteration-count: infinite;
+    display: none;
+}
+
+#tooltipRecompensa[data-show] {
+    display: block;
+}
+
+#arrow,
+#arrow::before {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: inherit;
+}
+
+#arrow {
+    visibility: hidden;
+}
+
+#arrow::before {
+    visibility: visible;
+    content: '';
+    transform: rotate(45deg);
+}
+
+#tooltipRecompensa[data-popper-placement^='bottom']>#arrow {
+    top: -4px;
+}
+
+#tooltipRecompensa[data-popper-placement^='right']>#arrow {
+    left: -4px;
+}
+
+
+@keyframes bounce {
+    0% {}
+    50% {
+        transform: translate(13%, 45px);
+    }
+    100% {}
 }
