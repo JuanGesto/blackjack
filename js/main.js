@@ -73,8 +73,10 @@ function repartirJugador() {
         acesJugador -= 1;
     }
 
-    cartaImg.onload = () =>{document.getElementById("puntos-jugador").innerText = puntosJugador;}
-    
+    cartaImg.onload = () => {
+        document.getElementById("puntos-jugador").innerText = puntosJugador;
+    }
+
 }
 
 function repartirCasa() {
@@ -93,7 +95,9 @@ function repartirCasa() {
         puntosCasa -= 10;
         acesCasa -= 1;
     }
-    cartaImg.onload = () =>{document.getElementById("puntos-casa").innerText = puntosCasa;}
+    cartaImg.onload = () => {
+        document.getElementById("puntos-casa").innerText = puntosCasa;
+    }
 }
 
 /* -------------------------------------------------------------------------- */
@@ -151,30 +155,30 @@ function jugar() {
     setTimeout(repartirCasa, 1500);
     setTimeout(repartirJugador, 2500);
     setTimeout(() => {
-    back = mazo.shift();
-    puntosCasa += getValor(back);
+        back = mazo.shift();
+        puntosCasa += getValor(back);
 
-    backImg = document.createElement("img");
-    backImg.classList.add("back");
-    backImg.src = "./media/BACK.png";
-    document.getElementById("cartas-casa").append(backImg);
+        backImg = document.createElement("img");
+        backImg.classList.add("back");
+        backImg.src = "./media/BACK.png";
+        document.getElementById("cartas-casa").append(backImg);
 
-    if (getValor(carta) == 11) {
-        acesCasa++;
-    }
-    if (puntosCasa > 21 && acesCasa > 0) {
-        puntosCasa -= 10;
-        acesCasa -= 1;
-    }
+        if (getValor(carta) == 11) {
+            acesCasa++;
+        }
+        if (puntosCasa > 21 && acesCasa > 0) {
+            puntosCasa -= 10;
+            acesCasa -= 1;
+        }
 
 
-    document.querySelector("#pedir").hidden = false;
-    document.querySelector("#parar").hidden = false;
+        document.querySelector("#pedir").hidden = false;
+        document.querySelector("#parar").hidden = false;
 
-    if (puntosJugador > 20) {
-        parar();
-    }
-}, 3500)
+        if (puntosJugador > 20) {
+            parar();
+        }
+    }, 3500)
 }
 
 /* -------------------------------------------------------------------------- */
@@ -225,10 +229,6 @@ function parar() {
             setTimeout(resultado, 500);
         }
     }, 1000)
-    /*while (puntosCasa < 17) {
-        setTimeout(repartirCasa, 250);
-    }
-    setTimeout(resultado, 1000);*/
 }
 
 /* -------------------------------------------------------------------------- */
@@ -292,6 +292,7 @@ function resultado() {
     document.querySelector("#resultado").setAttribute("data-show", "");
 
     addRecord();
+    recompensa();
 }
 
 /* -------------------------------------------------------------------------- */
@@ -302,9 +303,7 @@ let btnVolverAJugar = document.getElementById("volverAJugar");
 btnVolverAJugar.addEventListener("click", volverAJugar);
 
 function volverAJugar() {
-    if (loggedUserStats != undefined) {
-        recompensa();
-    }
+    recompensa();
 
     let cartas = document.getElementsByTagName("img");
     while (cartas.length !== 0) {
@@ -317,7 +316,7 @@ function volverAJugar() {
     acesCasa = 0;
     document.getElementById("puntos-jugador").innerText = "";
     document.getElementById("puntos-casa").innerText = "";
-    
+
     document.querySelector("#volverAJugar").hidden = true;
     document.querySelector("#parar").hidden = true;
     document.querySelector("#pedir").hidden = true;
@@ -337,7 +336,7 @@ function volverAJugar() {
     apuesta = document.getElementById("apuesta");
     apuesta.innerText = document.getElementById("myRange").value;
 
-    if (balance === 0) {
+    if (balance0 === true) {
         apuesta = 0;
         document.getElementById("apuesta").innerText = apuesta;
         btnApostar.setAttribute("disabled", true);
@@ -383,37 +382,59 @@ function reclamar() {
 }
 
 function recompensa() {
-    fecha = new Date();
-    dia = parseInt(fecha.getDay());
-    hoy = localStorage.setItem("hoy", dia);
-    if (isNaN(ayer)) {
-        btnReclamar.setAttribute("disabled", true);
-        loggedUserStats["reclamar"] = 0;
-        updateStats();
-    } else if (dia === ayer) {
-        if (loggedUserStats["reclamar"] == 1) {
+    if (loggedUserStats != undefined) {
+        fecha = new Date();
+        dia = parseInt(fecha.getDay());
+        hoy = localStorage.setItem("hoy", dia);
+        if (isNaN(ayer)) {
+            btnReclamar.setAttribute("disabled", true);
+            loggedUserStats["reclamar"] = 0;
+            updateStats();
+        } else if (dia === ayer) {
+            if (loggedUserStats["reclamar"] == 1) {
+                btnReclamar.removeAttribute("disabled");
+                tooltipRecompensa.setAttribute("data-show", "");
+                popperRecompensa.update();
+                document.querySelector("#disponible").hidden = true;
+                tooltipRecompensa2.removeAttribute("data-show");
+            } else {
+                btnReclamar.setAttribute("disabled", true);
+                document.querySelector("#disponible").hidden = false;
+            }
+        } else {
             btnReclamar.removeAttribute("disabled");
+            loggedUserStats["reclamar"] = 1;
+            updateStats();
             tooltipRecompensa.setAttribute("data-show", "");
             popperRecompensa.update();
             document.querySelector("#disponible").hidden = true;
-        } else {
-            btnReclamar.setAttribute("disabled", true);
-            document.querySelector("#disponible").hidden = false;
+            tooltipRecompensa2.removeAttribute("data-show");
         }
-    } else {
-        btnReclamar.removeAttribute("disabled");
-        loggedUserStats["reclamar"] = 1;
+        loggedUserStats["ayer"] = dia;
         updateStats();
-        tooltipRecompensa.setAttribute("data-show", "");
-        popperRecompensa.update();
-        document.querySelector("#disponible").hidden = true;
+        if (loggedUserStats["reclamar"] != 1 & balance === 0) {
+            tooltipRecompensa2.setAttribute("data-show", "");
+            popperRecompensa2.update();
+        }
+    } else if (balance === 0) {
+        tooltipRecompensa2.setAttribute("data-show", "");
+        popperRecompensa2.update();
     }
-    loggedUserStats["ayer"] = dia;
-    updateStats();
 }
 
 const tooltipRecompensa = document.getElementById("tooltipRecompensa");
 const popperRecompensa = Popper.createPopper(btnAbrirRecompensa, tooltipRecompensa, {
+    placement: "bottom",
+    modifiers: [{
+        name: "offset",
+        options: {
+            offset: [0, 8],
+        },
+    }, ],
+});
+
+const tooltipRecompensa2 = document.getElementById("tooltipRecompensa2");
+const popperRecompensa2 = Popper.createPopper(btnAbrirRecompensa, tooltipRecompensa2, {
     placement: "bottom",
     modifiers: [{
         name: "offset",
@@ -594,6 +615,10 @@ function logIn() {
 
                 volverAJugar();
                 range();
+
+                if (balance === 0) {
+                    btnApostar.setAttribute("disabled", true);
+                }
             } else {
                 document.getElementById("wrong").innerHTML = "Contraseña incorrecta";
             }
@@ -602,6 +627,20 @@ function logIn() {
         if (logInName.value != localStorage.key(i)) {
             document.getElementById("wrong").innerHTML = "Este usuario no existe";
         }
+    }
+}
+
+logInName = document.getElementById("logInName");
+logInPassword = document.getElementById("logInPassword");
+let sessionName = localStorage.getItem("sessionName");
+let sessionPassword = localStorage.getItem("sessionPassword");
+let remember = localStorage.getItem("remember");
+
+function autoLogIn() {
+    if (remember === "yes") {
+        logInName.setAttribute("value", sessionName);
+        logInPassword.setAttribute("value", sessionPassword);
+        logIn();
     }
 }
 
@@ -711,35 +750,15 @@ let btnLogOf = document.getElementById("logOf");
 btnLogOf.addEventListener("click", logOf);
 
 function logOf() {
-    loggedUser = undefined;
-    loggedUserStats = undefined;
     localStorage.setItem("remember", "no");
     localStorage.removeItem("sessionName");
     localStorage.removeItem("sessionPassword");
-    document.querySelector("#stats").hidden = true;
-    document.querySelector("#logIn").hidden = false;
-    btnReclamar.setAttribute("disabled", true);
-    tooltipRecompensa.removeAttribute("data-show");
-    volverAJugar();
+    location.reload();
 }
 
 /* -------------------------------------------------------------------------- */
 /*                                   onload                                   */
 /* -------------------------------------------------------------------------- */
-
-logInName = document.getElementById("logInName");
-logInPassword = document.getElementById("logInPassword");
-let sessionName = localStorage.getItem("sessionName");
-let sessionPassword = localStorage.getItem("sessionPassword");
-let remember = localStorage.getItem("remember");
-
-function autoLogIn() {
-    if (remember === "yes") {
-        logInName.setAttribute("value", sessionName);
-        logInPassword.setAttribute("value", sessionPassword);
-        logIn();
-    }
-}
 
 btnReclamar.setAttribute("disabled", true);
 volverAJugar();

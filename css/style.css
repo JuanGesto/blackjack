@@ -307,20 +307,26 @@ h4 {
 /* -------------------------------------------------------------------------- */
 /*                                  tooltips                                  */
 /* -------------------------------------------------------------------------- */
-#tooltipRecompensa {
+.tooltips {
   background: rgb(27, 26, 26);
   color: aliceblue;
   font-weight: bold;
   padding: 4px 8px;
   font-size: 13px;
   border-radius: 4px;
-  animation: bounce 1.5s;
-  animation-iteration-count: infinite;
   display: none;
 }
 
 #tooltipRecompensa[data-show] {
   display: block;
+  animation: bounce 1.5s;
+  animation-iteration-count: infinite;
+}
+
+#tooltipRecompensa2[data-show] {
+  display: block;
+  animation: bounce2 1.5s;
+  animation-iteration-count: infinite;
 }
 
 #arrow,
@@ -339,19 +345,38 @@ h4 {
   visibility: visible;
   content: "";
   transform: rotate(45deg);
+  position: absolute;
+  left: 0px;
 }
 
-#tooltipRecompensa[data-popper-placement^=bottom] > #arrow {
+.tooltips[data-popper-placement^=bottom] > #arrow {
   top: -4px;
 }
 
-#tooltipRecompensa[data-popper-placement^=right] > #arrow {
+.tooltips[data-popper-placement^=right] > #arrow {
   left: -4px;
 }
 
 @keyframes bounce {
+  0% {
+    transform: translate(18px, 39px);
+  }
   50% {
-    transform: translate(13%, 45px);
+    transform: translate(18px, 45px);
+  }
+  100% {
+    transform: translate(18px, 39px);
+  }
+}
+@keyframes bounce2 {
+  0% {
+    transform: translate(73px, 39px);
+  }
+  50% {
+    transform: translate(73px, 45px);
+  }
+  100% {
+    transform: translate(73px, 39px);
   }
 }
 #sidepanel {
