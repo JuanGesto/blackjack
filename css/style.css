@@ -304,6 +304,14 @@ h4 {
   background-size: 55%;
 }
 
+#btnTienda {
+  background-color: rgba(0, 0, 0, 0.2196078431);
+  background-image: url(../media/bag.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 65%;
+}
+
 /* -------------------------------------------------------------------------- */
 /*                                  tooltips                                  */
 /* -------------------------------------------------------------------------- */
@@ -549,6 +557,50 @@ h4 {
 
 [type=checkbox]:checked + label:after {
   display: block;
+}
+
+#tienda {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20%;
+  height: 100%;
+  overflow-y: scroll;
+  background-color: rgba(0, 0, 0, 0.1921568627);
+  box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.5607843137), 5px -5px 10px rgba(0, 0, 0, 0);
+  -webkit-box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.5607843137), 5px -5px 10px rgba(0, 0, 0, 0);
+  -moz-box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.5607843137), 5px -5px 10px rgba(0, 0, 0, 0);
+  -o-box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.5607843137), 5px -5px 10px rgba(0, 0, 0, 0);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(3px);
+}
+#tienda h2 {
+  margin: 15% auto;
+}
+#tienda h3 {
+  font-size: 1.3em;
+}
+#tienda img {
+  width: 75%;
+}
+
+#cerrarTienda {
+  position: absolute;
+  top: 0.5em;
+  left: 0.5em;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.226);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(7, 136, 54, 0.1921568627);
+  border-radius: 50% 50% 50% 50%/3% 3% 3% 3%;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "nombre": "Mazo de cartas",
+        "color": "rojo",
+        "precio": 800,
+        "stock": 86,
+        "img": "./media/red.webp"
+    },
+    {
+        "id": 2,
+        "nombre": "Mazo de cartas",
+        "color": "azul",
+        "precio": 800,
+        "stock": 94,
+        "img": "./media/blue.webp"
+    },
+    {
+        "id": 3,
+        "nombre": "Fichas de casino",
+        "precio": 1400,
+        "stock": 0,
+        "img": "./media/chips.webp"
+    },
+    {
+        "id": 4,
+        "nombre": "Kit completo",
+        "precio": 5420,
+        "stock": 48,
+        "img": "./media/case.webp"
+    }
+]

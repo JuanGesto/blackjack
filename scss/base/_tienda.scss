@@ -1,0 +1,44 @@
+#tienda {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20%;
+    height: 100%;
+    overflow-y: scroll;
+    background-color: #00000031;
+    box-shadow: -5px 5px 10px #0000008f, 5px -5px 10px #00000000;
+    -webkit-box-shadow: -5px 5px 10px #0000008f, 5px -5px 10px #00000000;
+    -moz-box-shadow: -5px 5px 10px #0000008f, 5px -5px 10px #00000000;
+    -o-box-shadow: -5px 5px 10px #0000008f, 5px -5px 10px #00000000;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(3px);
+
+    h2 {
+        margin: 15% auto;
+    }
+    h3 {
+        font-size: 1.3em;
+    }
+    img {
+        width: 75%;
+    }
+}
+
+#cerrarTienda {
+    position: absolute;
+    top: 0.5em;
+    left: 0.5em;
+}
+
+//scrollbar
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.226)
+}
+::-webkit-scrollbar-thumb {
+    background: #07883631;
+border-radius: 50% 50% 50% 50% / 3% 3% 3% 3%;;
+}

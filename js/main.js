@@ -4,11 +4,12 @@ let back;
 let mazo;
 let acesJugador = 0;
 let acesCasa = 0;
+let cartasJ;
+let cartasC;
 let balance = 1000;
 let slider;
 let max;
 let apuesta;
-let hoy;
 let dia;
 let ayer;
 let rachaActual = 0;
@@ -218,6 +219,7 @@ function parar() {
 
     cartaImg = document.createElement("img");
     cartaImg.src = "./media/" + back + ".svg";
+    cartaImg.classList.add("cartaC")
     document.getElementById("cartas-casa").append(cartaImg);
     document.getElementById("puntos-casa").innerText = puntosCasa;
 
@@ -305,10 +307,15 @@ btnVolverAJugar.addEventListener("click", volverAJugar);
 function volverAJugar() {
     recompensa();
 
-    let cartas = document.getElementsByTagName("img");
-    while (cartas.length !== 0) {
-        cartas[0].remove();
+    cartasJ = document.getElementsByClassName("cartaJ");
+    cartasC = document.getElementsByClassName("cartaC");
+    while (cartasJ.length !== 0) {
+        cartasJ[0].remove();
     }
+    while (cartasC.length !== 0) {
+        cartasC[0].remove();
+    }
+    
 
     puntosCasa = 0;
     puntosJugador = 0;
@@ -385,13 +392,12 @@ function recompensa() {
     if (loggedUserStats != undefined) {
         fecha = new Date();
         dia = parseInt(fecha.getDay());
-        hoy = localStorage.setItem("hoy", dia);
         if (isNaN(ayer)) {
             btnReclamar.setAttribute("disabled", true);
             loggedUserStats["reclamar"] = 0;
             updateStats();
         } else if (dia === ayer) {
-            if (loggedUserStats["reclamar"] == 1) {
+            if (loggedUserStats["reclamar"] === 1) {
                 btnReclamar.removeAttribute("disabled");
                 tooltipRecompensa.setAttribute("data-show", "");
                 popperRecompensa.update();
@@ -757,6 +763,37 @@ function logOf() {
 }
 
 /* -------------------------------------------------------------------------- */
+/*                                   tienda                                   */
+/* -------------------------------------------------------------------------- */
+
+let btnTienda = document.getElementById("btnTienda");
+btnTienda.addEventListener("click", abrirTienda);
+
+function abrirTienda() {
+    document.querySelector("#tienda").hidden = false;
+}
+let btnCerrarTienda = document.getElementById("cerrarTienda");
+btnCerrarTienda.addEventListener("click", cerrarTienda);
+
+function cerrarTienda() {
+    document.querySelector("#tienda").hidden = true;
+}
+
+const listaProductos = document.querySelector("#productos");
+
+fetch("./js/stock.json")
+    .then((response) => response.json())
+    .then((stock) => {
+        stock.forEach(stock => {
+            const li = document.createElement("li")
+            li.innerHTML = `<h3>${stock.nombre}</h3><img src="${stock.img}" alt="imagen"><p>precio: $${stock.precio}</p>`
+
+            listaProductos.append(li);
+        });
+    });
+
+
+/* -------------------------------------------------------------------------- */
 /*                                   onload                                   */
 /* -------------------------------------------------------------------------- */
 
@@ -769,4 +806,5 @@ document.querySelector("#sidepanel").hidden = true;
 document.querySelector("#logIn").hidden = false;
 document.querySelector("#signUp").hidden = true;
 document.querySelector("#stats").hidden = true;
+//document.querySelector("#tienda").hidden = true;
 autoLogIn();
