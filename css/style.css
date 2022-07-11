@@ -259,9 +259,15 @@ h4 {
 }
 
 #menu {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   top: 20px;
   left: 20px;
+}
+
+.boton {
+  margin: 10%;
 }
 
 #abrirReglas {
@@ -370,25 +376,13 @@ h4 {
 }
 
 @keyframes bounce {
-  0% {
-    transform: translate(18px, 39px);
-  }
   50% {
-    transform: translate(18px, 45px);
-  }
-  100% {
-    transform: translate(18px, 39px);
+    transform: translate(50px, 35px);
   }
 }
 @keyframes bounce2 {
-  0% {
-    transform: translate(73px, 39px);
-  }
   50% {
-    transform: translate(73px, 45px);
-  }
-  100% {
-    transform: translate(73px, 39px);
+    transform: translate(50px, 44px);
   }
 }
 #sidepanel {
@@ -627,6 +621,10 @@ h4 {
 }
 .cantidad:focus {
   outline: none;
+}
+
+.cantidad::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 
 .btnCantidad {

@@ -55,6 +55,7 @@ border-radius: 50% 50% 50% 50% / 3% 3% 3% 3%;;
     appearance: none;
     height: 1em;
     width: 2em;
+
     margin: 5% 0 10%;
     background: rgb(12, 65, 32);
     box-shadow: inset 5px 5px 12px #00000065, inset -5px -5px 12px #00000000;
@@ -65,6 +66,10 @@ border-radius: 50% 50% 50% 50% / 3% 3% 3% 3%;;
     &:focus {
         outline: none;
     }
+}
+
+.cantidad::-webkit-inner-spin-button {
+    -webkit-appearance: none;
 }
 
 .btnCantidad {

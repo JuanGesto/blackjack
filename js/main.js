@@ -58,6 +58,7 @@ function getValor(carta) {
 }
 
 function repartirJugador() {
+    console.log("empieza")
     carta = mazo.shift();
     puntosJugador += getValor(carta);
 
@@ -77,7 +78,7 @@ function repartirJugador() {
     cartaImg.onload = () => {
         document.getElementById("puntos-jugador").innerText = puntosJugador;
     }
-
+    console.log("termina")
 }
 
 function repartirCasa() {
@@ -134,6 +135,8 @@ let btnApostar = document.getElementById("apostar");
 btnApostar.addEventListener("click", apostar);
 
 function apostar() {
+    btnPedir.setAttribute("disabled", true);
+    btnParar.setAttribute("disabled",true);
     document.querySelector("#slidercontainer").hidden = true;
     document.querySelector("#apostar").hidden = true;
     document.querySelector("#parar").hidden = false;
@@ -172,7 +175,8 @@ function jugar() {
             acesCasa -= 1;
         }
 
-
+        btnPedir.removeAttribute("disabled");
+        btnParar.removeAttribute("disabled");
         document.querySelector("#pedir").hidden = false;
         document.querySelector("#parar").hidden = false;
 
@@ -190,6 +194,8 @@ let btnPedir = document.getElementById("pedir");
 btnPedir.addEventListener("click", pedir);
 
 function pedir() {
+    btnPedir.setAttribute("disabled", true);
+    btnParar.setAttribute("disabled", true);
     repartirJugador();
 
     if (puntosJugador > 21 && acesJugador > 0) {
@@ -202,6 +208,12 @@ function pedir() {
     if (puntosJugador > 20) {
         setTimeout(parar, 500);
     }
+
+    setTimeout(() => {
+        btnPedir.removeAttribute("disabled");
+        btnParar.removeAttribute("disabled");
+    }, 500);
+
 }
 
 /* -------------------------------------------------------------------------- */
@@ -430,7 +442,7 @@ function recompensa() {
 
 const tooltipRecompensa = document.getElementById("tooltipRecompensa");
 const popperRecompensa = Popper.createPopper(btnAbrirRecompensa, tooltipRecompensa, {
-    placement: "bottom",
+    placement: "right",
     modifiers: [{
         name: "offset",
         options: {
@@ -441,7 +453,7 @@ const popperRecompensa = Popper.createPopper(btnAbrirRecompensa, tooltipRecompen
 
 const tooltipRecompensa2 = document.getElementById("tooltipRecompensa2");
 const popperRecompensa2 = Popper.createPopper(btnAbrirRecompensa, tooltipRecompensa2, {
-    placement: "bottom",
+    placement: "right",
     modifiers: [{
         name: "offset",
         options: {

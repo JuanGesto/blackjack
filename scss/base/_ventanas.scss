@@ -95,9 +95,15 @@
 }
 
 #menu {
+    display: flex;
+    flex-direction: column;
     position: absolute;
     top: 20px;
     left: 20px;
+}
+
+.boton {
+    margin: 10%;
 }
 
 #abrirReglas {
@@ -209,24 +215,24 @@
 
 @keyframes bounce {
     0% {
-        transform: translate(18px, 39px);
+
     }
     50% {
-        transform: translate(18px, 45px);
+        transform: translate(50px, 35px);
     }
     100% {
-        transform: translate(18px, 39px);
+
     }
 }
 
 @keyframes bounce2 {
     0% {
-        transform: translate(73px, 39px);
+
     }
     50% {
-        transform: translate(73px, 45px);
+        transform: translate(50px, 44px);
     }
     100% {
-        transform: translate(73px, 39px);
+
     }
 }
