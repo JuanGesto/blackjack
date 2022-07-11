@@ -780,18 +780,126 @@ function cerrarTienda() {
 }
 
 const listaProductos = document.querySelector("#productos");
-
+let btnmenos;
+let btnmas;
+let input;
+let stock;
+let outOfStock;
 fetch("./js/stock.json")
     .then((response) => response.json())
     .then((stock) => {
         stock.forEach(stock => {
-            const li = document.createElement("li")
-            li.innerHTML = `<h3>${stock.nombre}</h3><img src="${stock.img}" alt="imagen"><p>precio: $${stock.precio}</p>`
+            const liCatalogo = document.createElement("li")
+            liCatalogo.innerHTML = `<h3>${stock.nombre}</h3>
+            <img src="${stock.img}" alt="${stock.nombre}">
+            <p>precio: $${stock.precio}</p>
+            <p id="outOfStock${stock.id}"></p>
+            <button id="menos${stock.id}" class="btnCantidad">-</button>
+            <input type="number" id="input${stock.id}" class="cantidad" readonly value="0" min="0" max="${stock.stock}">
+            <button id="mas${stock.id}" class="btnCantidad">+</button>`
 
-            listaProductos.append(li);
+            listaProductos.append(liCatalogo);
+            btnmenos = "#menos"+`${stock.id}`;
+            btnmas = "#mas"+`${stock.id}`;
+            input = "#input"+`${stock.id}`;
+            outOfStock = "outOfStock"+`${stock.id}`;
+            stock = `${stock.stock}`;
+            incdec(btnmenos, btnmas, input, stock);
+            if (stock < 1) {
+                const agotado = document.createElement("p");
+                agotado.innerHTML = "AGOTADO";
+                agotado.classList.add("noStock");
+                document.getElementById(outOfStock).append(agotado);
+            }
         });
     });
 
+function incdec(btnmenos, btnmas, input, stock) {
+    document.querySelector(btnmenos).addEventListener("click", () => {
+        const el = document.querySelector(input);
+        if (parseInt(el.value) > 0) {
+        el.value = parseInt(el.value) -1;
+        }
+    })
+
+    document.querySelector(btnmas).addEventListener("click", () => {
+        const el = document.querySelector(input);
+        if (parseInt(el.value) < stock) {
+        el.value = parseInt(el.value) +1;
+        }
+    })
+}
+let carritoTotal = 0;
+let subtotal;
+const btnComprar = document.getElementById("comprar");
+btnComprar.addEventListener("click", comprar);
+function comprar() {
+    document.querySelector("#catalogo").hidden = true;
+    document.querySelector("#carrito-container").hidden = false;
+
+    const listaCarrito = document.querySelector("#listaCarrito");
+    fetch("./js/stock.json")
+    .then((response) => response.json())
+    .then((stock) => {
+            stock.forEach(stock => {
+                const inputValue = document.getElementById("input"+`${stock.id}`);
+
+                if (inputValue.value > 0) {
+                    const liCarrito = document.createElement("li");
+                    liCarrito.classList.add("carritoItem");
+                    liCarrito.innerHTML = `<img src="${stock.img}" alt="${stock.nombre}">
+                    <p class="carritoNombre">${stock.nombre}</p>
+                    <p class="carritoCantidad">Unidades: ${inputValue.value}</p>
+                    <p class="carritoSubtotal">Subtotal: $${+ inputValue.value * stock.precio}</p>
+                    `
+                    listaCarrito.append(liCarrito);
+                    subtotal = `${inputValue.value * stock.precio}`;
+                    carritoTotal += parseInt(subtotal);
+
+                    const border = document.createElement("div");
+                    border.classList.add("border");
+                    listaCarrito.append(border);
+                }
+            });
+            document.getElementById("total").innerHTML = "Total: $" + carritoTotal;
+            if (carritoTotal === 0) {
+                document.getElementById("total").innerHTML = "El carrito esta vacío";
+            }
+    });
+}
+
+const btnCerrarCarrito = document.getElementById("cerrarCarrito");
+btnCerrarCarrito.addEventListener("click", cerrarCarrito);
+function cerrarCarrito() {
+    document.querySelector("#catalogo").hidden = false;
+    document.querySelector("#carrito-container").hidden = true;
+
+    while (listaCarrito.getElementsByTagName("li").length > 0) {
+        const carritoItem = document.querySelector(".carritoItem");
+        carritoItem.parentElement.removeChild(carritoItem);
+        const border = document.querySelector(".border");
+        border.parentElement.removeChild(border);
+    }
+    carritoTotal = 0;
+    document.querySelector("#outOfService").removeAttribute("data-show");
+    }
+
+const btnPagar = document.getElementById("pagar");
+btnPagar.addEventListener("click", pagar);
+function pagar() {
+    const outOfService = document.getElementById("outOfService");
+    const popperOutOfService = Popper.createPopper(btnPagar, outOfService, {
+    placement: "top",
+    modifiers: [{
+        name: "offset",
+        options: {
+            offset: [0, 10],
+        },
+    }, ],
+});
+outOfService.setAttribute("data-show", "");
+popperOutOfService.update();
+}
 
 /* -------------------------------------------------------------------------- */
 /*                                   onload                                   */
@@ -806,5 +914,6 @@ document.querySelector("#sidepanel").hidden = true;
 document.querySelector("#logIn").hidden = false;
 document.querySelector("#signUp").hidden = true;
 document.querySelector("#stats").hidden = true;
-//document.querySelector("#tienda").hidden = true;
+document.querySelector("#tienda").hidden = true;
+document.querySelector("#carrito-container").hidden = true;
 autoLogIn();

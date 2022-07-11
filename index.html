@@ -72,7 +72,7 @@
         <div id="carteles">
             <div id="hagaApuesta" role="tooltip">Haga su apuesta</div>
             <div id="resultado" role="tooltip">¡Usted gana!</h2>
-        </div>
+            </div>
 
     </main>
 
@@ -182,14 +182,33 @@
         </div>
     </section>
 
-<!-- ----------------------------------------------------------------------- -->
-<!--                                 tienda                                  -->
-<!-- ----------------------------------------------------------------------- -->
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                                 tienda                                  -->
+    <!-- ----------------------------------------------------------------------- -->
 
     <section id="tienda">
         <button id="cerrarTienda" class="cerrar"> X </button>
-        <h2>Tienda</h2>
-        <ul id="productos"></ul>
+        <div id="catalogo">
+            <h2>Tienda</h2>
+            <ul id="productos"></ul>
+            <button id="comprar" class="submit">Comprar</button>
+        </div>
+        <div id="carrito-container">
+            <div id="carrito">
+                <div>
+                    <h2>Carrito</h2>
+                    <ul id="listaCarrito"></ul>
+                    <p id="total">Total: $0</p>
+                </div>
+                <div id="btnsCarrito">
+                    <div id="outOfService" class="tooltips" role="tooltip">Este servicio se encuentra momentaneamente
+                        fuera
+                        de servicio. Disculpe las molestias.</div>
+                    <button id="pagar" class="submit">Pagar</button>
+                    <button id="cerrarCarrito" class="submit">Seguir comprando</button>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- JS -->
