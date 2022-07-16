@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Fonts -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,400;1,600&display=swap');
@@ -203,13 +203,61 @@
                     <p id="total">Total: $0</p>
                 </div>
                 <div id="btnsCarrito">
-                    <div id="outOfService" class="tooltips" role="tooltip">Este servicio se encuentra momentaneamente
-                        fuera
-                        de servicio. Disculpe las molestias.</div>
-                    <button id="pagar" class="submit">Pagar</button>
+                    <button id="continuar" class="submit">Continuar</button>
                     <button id="cerrarCarrito" class="submit">Seguir comprando</button>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                                checkout                                 -->
+    <!-- ----------------------------------------------------------------------- -->
+
+    <section id="checkout-container" class="checkout-container">
+        <div id="checkout" class="checkout">
+            <div id="informacion">
+                <h2>Método de pago</h2>
+                <form id="form">
+                    <label class="numero">Número de tarjeta<input type="number" class="input" required /></label>
+                    <label class="vencimiento">Vencimiento<input type="number" class="input" required /></label>
+                    <label class="codigo">Código de seguridad<input type="number" class="input" required /></label>
+                    <label class="nombre">Nombre<input type="text" class="input" required /></label>
+                    <label class="apellido">Apellido<input type="text" class="input" required /></label>
+                    <label class="ciudad">Ciudad<input type="text" class="input" required /></label>
+                    <label class="direccion">Dirección<input type="text" class="input" required /></label>
+                    <label class="zip">Código postal<input type="number" class="input" required /></label>
+                    <label class="pais">País<input type="text" class="input" required /></label>
+                    <label class="telefono">Número de teléfono<input type="number" class="input" required /></label>
+                    <div id="btnsCheckout">
+                        <button id="cancelar" class="submit">Cancelar</button>
+                        <input type="submit" id="pagar" class="submit" value="Pagar" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="confirmacion">
+            <p>¿Desea confirmar su compra por un total de $<span id="monto"></span>?</p>
+            <div id="checkmark-container">
+                <div class="success-checkmark">
+                    <div class="check-icon">
+                        <span class="icon-line line-tip"></span>
+                        <span class="icon-line line-long"></span>
+                        <div class="icon-circle"></div>
+                        <div class="icon-fix"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="spinner-container">
+                <div id="html-spinner"></div>
+            </div>
+            <p id="msjConfirmacion">Gracias por su compra.<br>Su pedido llegara entre 3 y 5 días hábiles.</p>
+            <div id="btnsConfirmacion">
+                <button id="volver" class="submit">volver</button>
+                <button id="confirmar" class="submit">Confirmar compra</button>
+            </div>
+            <button id="cerrarConfirmacion" class="submit">Cerrar</button>
         </div>
     </section>
 

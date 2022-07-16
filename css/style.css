@@ -699,13 +699,499 @@ h4 {
   align-items: center;
 }
 
-#outOfService {
-  background-color: #861515;
-  width: 80%;
-}
-
 #outOfService[data-show] {
   display: block;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                  checkout                                  */
+/* -------------------------------------------------------------------------- */
+.checkout-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.hidden {
+  display: none;
+}
+
+.checkout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 50%;
+  border-radius: 1%;
+  padding: 2%;
+  background-color: rgba(10, 65, 30, 0.8705882353);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
+  -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
+  -moz-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
+  -o-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(3px);
+}
+.checkout h2 {
+  margin-bottom: 5%;
+}
+.checkout input {
+  width: 100%;
+}
+.checkout input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+#form {
+  display: grid;
+  grid-template-areas: "numero numero vencimiento codigo" "nombre nombre ciudad zip" "apellido apellido direccion direccion" "pais pais telefono telefono" "btnsCheckout btnsCheckout btnsCheckout btnsCheckout";
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  text-align: start;
+}
+#form label {
+  font-size: 0.8em;
+  line-height: 1.5em;
+  margin: 0 5%;
+}
+
+#form .numero {
+  grid-area: numero;
+}
+#form .vencimiento {
+  grid-area: vencimiento;
+}
+#form .codigo {
+  grid-area: codigo;
+}
+#form .nombre {
+  grid-area: nombre;
+}
+#form .apellido {
+  grid-area: apellido;
+}
+#form .ciudad {
+  grid-area: ciudad;
+}
+#form .direccion {
+  grid-area: direccion;
+}
+#form .zip {
+  grid-area: zip;
+}
+#form .pais {
+  grid-area: pais;
+}
+#form .telefono {
+  grid-area: telefono;
+}
+#form #btnsCheckout {
+  grid-area: btnsCheckout;
+}
+
+#btnsCheckout {
+  display: flex;
+  justify-content: space-evenly;
+}
+#btnsCheckout .submit {
+  margin: 3% 2%;
+  width: 30%;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                confirmacion                                */
+/* -------------------------------------------------------------------------- */
+.confirmacion {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: fit-content;
+  border-radius: 1%;
+  padding: 2%;
+  background-color: rgba(10, 65, 30, 0.8705882353);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
+  -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
+  -moz-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
+  -o-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+#btnsConfirmacion {
+  width: 100%;
+}
+#btnsConfirmacion button {
+  margin: 3% 2%;
+}
+
+#cerrarConfirmacion {
+  margin-top: 2em;
+}
+
+#cerrarConfirmacion, #msjConfirmacion {
+  -webkit-animation-name: gracias;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-duration: 1.6s;
+  -webkit-animation-timing-function: linear;
+  -moz-animation-name: gracias;
+  -moz-animation-fill-mode: forwards;
+  -moz-animation-duration: 1.6s;
+  -moz-animation-timing-function: linear;
+  animation-name: gracias;
+  animation-fill-mode: forwards;
+  animation-duration: 1.6s;
+  animation-timing-function: linear;
+}
+
+@-webkit-keyframes gracias {
+  0% {
+    opacity: 0;
+    height: 0;
+  }
+  80% {
+    opacity: 0;
+    height: 1.7em;
+  }
+  100% {
+    opacity: 100%;
+    height: 1.7em;
+  }
+}
+@-moz-keyframes gracias {
+  0% {
+    opacity: 0;
+    height: 0;
+  }
+  80% {
+    opacity: 0;
+    height: 1.7em;
+  }
+  100% {
+    opacity: 100%;
+    height: 1.7em;
+  }
+}
+@keyframes gracias {
+  0% {
+    opacity: 0;
+    height: 0;
+  }
+  80% {
+    opacity: 0;
+    height: 1.7em;
+  }
+  100% {
+    opacity: 100%;
+    height: 1.7em;
+  }
+}
+/* -------------------------------------------------------------------------- */
+/*                          animacion de confirmacion                         */
+/* -------------------------------------------------------------------------- */
+#checkmark-container {
+  margin: 2em;
+}
+
+.success-checkmark {
+  width: 88px;
+  height: 88px;
+  margin: 0 auto;
+}
+.success-checkmark .check-icon {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  border-radius: 50%;
+  box-sizing: content-box;
+  border: 4px solid #0a7c36;
+}
+.success-checkmark .check-icon::before {
+  top: 3px;
+  left: -2px;
+  width: 30px;
+  transform-origin: 100% 50%;
+  border-radius: 100px 0 0 100px;
+}
+.success-checkmark .check-icon::after {
+  top: 0;
+  left: 30px;
+  width: 60px;
+  transform-origin: 0 50%;
+  border-radius: 0 100px 100px 0;
+  animation: rotate-circle 4.25s ease-in;
+}
+.success-checkmark .check-icon .icon-line {
+  height: 5px;
+  background-color: #0a7c36;
+  display: block;
+  border-radius: 2px;
+  position: absolute;
+  z-index: 10;
+}
+.success-checkmark .check-icon .icon-line.line-tip {
+  top: 46px;
+  left: 14px;
+  width: 25px;
+  transform: rotate(45deg);
+  animation: icon-line-tip 0.75s;
+}
+.success-checkmark .check-icon .icon-line.line-long {
+  top: 38px;
+  right: 8px;
+  width: 47px;
+  transform: rotate(-45deg);
+  animation: icon-line-long 0.75s;
+}
+.success-checkmark .check-icon .icon-circle {
+  top: -4px;
+  left: -4px;
+  z-index: 10;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  position: absolute;
+  box-sizing: content-box;
+  border: 4px solid #0a7c36;
+}
+
+@keyframes icon-line-tip {
+  0% {
+    width: 0;
+    left: 1px;
+    top: 19px;
+  }
+  54% {
+    width: 0;
+    left: 1px;
+    top: 19px;
+  }
+  70% {
+    width: 50px;
+    left: -8px;
+    top: 37px;
+  }
+  84% {
+    width: 17px;
+    left: 21px;
+    top: 48px;
+  }
+  100% {
+    width: 25px;
+    left: 14px;
+    top: 45px;
+  }
+}
+@keyframes icon-line-long {
+  0% {
+    width: 0;
+    right: 46px;
+    top: 54px;
+  }
+  65% {
+    width: 0;
+    right: 46px;
+    top: 54px;
+  }
+  84% {
+    width: 55px;
+    right: 0px;
+    top: 35px;
+  }
+  100% {
+    width: 47px;
+    right: 8px;
+    top: 38px;
+  }
+}
+#html-spinner {
+  width: 80px;
+  height: 0;
+  opacity: 0;
+  border: 4px solid #0a7c36;
+  border-top: 4px solid #6ec079;
+  border-radius: 50%;
+  -webkit-transition-property: -webkit-transform;
+  -webkit-animation-duration: 1.6s;
+  -webkit-animation-timing-function: linear;
+  -moz-transition-property: -moz-transform;
+  -moz-animation-duration: 1.6s;
+  -moz-animation-timing-function: linear;
+  transition-property: transform;
+  animation-duration: 1.6s;
+  animation-timing-function: linear;
+}
+
+.rotate {
+  -webkit-animation-name: height, rotate;
+  -webkit-animation-iteration-count: 1, infinite;
+  -webkit-animation-delay: 0ms, 1.6s;
+  -moz-animation-name: height, rotate;
+  -moz-animation-iteration-count: 1, infinite;
+  -moz-animation-delay: 0ms, 1.6s;
+  animation-name: height, rotate;
+  animation-iteration-count: 1, infinite;
+  animation-delay: 0ms, 1.6s;
+}
+
+.color {
+  -webkit-animation-name: color;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-name: color;
+  -moz-animation-fill-mode: forwards;
+  animation-name: color;
+  animation-fill-mode: forwards;
+  margin: 2em;
+  opacity: 100%;
+  height: 80px;
+}
+
+@-webkit-keyframes height {
+  0% {
+    opacity: 0;
+    height: 0;
+    margin: 0;
+  }
+  80% {
+    opacity: 0;
+    height: 80px;
+    margin: 2em;
+  }
+  100% {
+    opacity: 100%;
+    height: 80px;
+    margin: 2em;
+  }
+}
+@-moz-keyframes height {
+  0% {
+    opacity: 0;
+    height: 0;
+    margin: 0;
+  }
+  80% {
+    opacity: 0;
+    height: 80px;
+    margin: 2em;
+  }
+  100% {
+    opacity: 100%;
+    height: 80px;
+    margin: 2em;
+  }
+}
+@keyframes height {
+  0% {
+    opacity: 0;
+    height: 0;
+    margin: 0;
+  }
+  80% {
+    opacity: 0;
+    height: 80px;
+    margin: 2em;
+  }
+  100% {
+    opacity: 100%;
+    height: 80px;
+    margin: 2em;
+  }
+}
+@-webkit-keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+    opacity: 100%;
+    height: 80px;
+    margin: 2em;
+  }
+  100% {
+    transform: rotate(360deg);
+    opacity: 100%;
+    height: 80px;
+    margin: 2em;
+  }
+}
+@-moz-keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+    opacity: 100%;
+    height: 80px;
+    margin: 2em;
+  }
+  100% {
+    transform: rotate(360deg);
+    opacity: 100%;
+    height: 80px;
+    margin: 2em;
+  }
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+    opacity: 100%;
+    height: 80px;
+    margin: 2em;
+  }
+  100% {
+    transform: rotate(360deg);
+    opacity: 100%;
+    height: 80px;
+    margin: 2em;
+  }
+}
+@-webkit-keyframes color {
+  0% {
+    opacity: 100%;
+    transform: rotate(0deg);
+    height: 80px;
+  }
+  70% {
+    border-color: #0a7c36;
+  }
+  100% {
+    opacity: 100%;
+    transform: rotate(360deg);
+    border-color: #0a7c36;
+    height: 80px;
+  }
+}
+@-moz-keyframes color {
+  0% {
+    opacity: 100%;
+    transform: rotate(0deg);
+    height: 80px;
+  }
+  70% {
+    border-color: #0a7c36;
+  }
+  100% {
+    opacity: 100%;
+    transform: rotate(360deg);
+    border-color: #0a7c36;
+    height: 80px;
+  }
+}
+@keyframes color {
+  0% {
+    opacity: 100%;
+    transform: rotate(0deg);
+    height: 80px;
+  }
+  70% {
+    border-color: #0a7c36;
+  }
+  100% {
+    opacity: 100%;
+    transform: rotate(360deg);
+    border-color: #0a7c36;
+    height: 80px;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

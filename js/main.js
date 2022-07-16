@@ -797,6 +797,7 @@ let btnmas;
 let input;
 let stock;
 let outOfStock;
+let carrito = [];
 fetch("./js/stock.json")
     .then((response) => response.json())
     .then((stock) => {
@@ -811,11 +812,13 @@ fetch("./js/stock.json")
             <button id="mas${stock.id}" class="btnCantidad">+</button>`
 
             listaProductos.append(liCatalogo);
+            carrito.push(`{${stock.id}, 0}`);
+
             btnmenos = "#menos"+`${stock.id}`;
             btnmas = "#mas"+`${stock.id}`;
             input = "#input"+`${stock.id}`;
             outOfStock = "outOfStock"+`${stock.id}`;
-            stock = `${stock.stock}`;
+                        stock = `${stock.stock}`;
             incdec(btnmenos, btnmas, input, stock);
             if (stock < 1) {
                 const agotado = document.createElement("p");
@@ -823,14 +826,19 @@ fetch("./js/stock.json")
                 agotado.classList.add("noStock");
                 document.getElementById(outOfStock).append(agotado);
             }
+            
+            
         });
     });
+
+    
 
 function incdec(btnmenos, btnmas, input, stock) {
     document.querySelector(btnmenos).addEventListener("click", () => {
         const el = document.querySelector(input);
         if (parseInt(el.value) > 0) {
         el.value = parseInt(el.value) -1;
+
         }
     })
 
@@ -876,8 +884,15 @@ function comprar() {
             document.getElementById("total").innerHTML = "Total: $" + carritoTotal;
             if (carritoTotal === 0) {
                 document.getElementById("total").innerHTML = "El carrito esta vacío";
+                document.querySelector("#continuar").setAttribute("disabled", true);
+            } else {
+                document.querySelector("#continuar").removeAttribute("disabled");
             }
     });
+
+    function armarCarrito() {
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+    }
 }
 
 const btnCerrarCarrito = document.getElementById("cerrarCarrito");
@@ -893,25 +908,87 @@ function cerrarCarrito() {
         border.parentElement.removeChild(border);
     }
     carritoTotal = 0;
-    document.querySelector("#outOfService").removeAttribute("data-show");
     }
 
-const btnPagar = document.getElementById("pagar");
-btnPagar.addEventListener("click", pagar);
-function pagar() {
-    const outOfService = document.getElementById("outOfService");
-    const popperOutOfService = Popper.createPopper(btnPagar, outOfService, {
-    placement: "top",
-    modifiers: [{
-        name: "offset",
-        options: {
-            offset: [0, 10],
-        },
-    }, ],
-});
-outOfService.setAttribute("data-show", "");
-popperOutOfService.update();
+const btnContinuar = document.getElementById("continuar");
+btnContinuar.addEventListener("click", continuar);
+function continuar() {
+    document.querySelector("#checkout-container").classList.add("checkout-container");
+    document.querySelector("#checkout-container").classList.remove("hidden");
 }
+
+const btnCancelar = document.getElementById("cancelar");
+btnCancelar.addEventListener("click", cancelar);
+function cancelar() {
+    document.querySelector("#checkout-container").classList.add("hidden");
+    document.querySelector("#checkout-container").classList.remove("checkout-container");
+}
+
+const form = document.getElementById("form");
+form.addEventListener("submit", pagar);
+function pagar() {
+    document.querySelector("#confirmacion").classList.remove("hidden");
+    document.querySelector("#confirmacion").classList.add("confirmacion");
+    document.querySelector("#checkout").classList.add("hidden");
+    document.querySelector("#checkout").classList.remove("checkout");
+    document.querySelector("#spinner-container").hidden = false;
+    document.querySelector("#checkmark-container").hidden = true;
+    document.getElementById("monto").innerHTML = carritoTotal
+    document.getElementById("msjConfirmacion").hidden = true;
+    document.getElementById("btnsConfirmacion").hidden = false;
+    document.getElementById("cerrarConfirmacion").hidden = true;
+    document.querySelector("#html-spinner").classList.remove("color");
+}
+
+const btnPagar = document.getElementById("pagar");
+btnPagar.addEventListener("click", preventDefault);
+function preventDefault() {
+    const form = document.getElementById("form");
+    function handleForm(event) { event.preventDefault(); } 
+    form.addEventListener('submit', handleForm);
+}
+
+const btnVolver = document.getElementById("volver");
+btnVolver.addEventListener("click", volver);
+function volver() {
+    document.querySelector("#confirmacion").hidden = true;
+    document.querySelector("#checkout").classList.remove("hidden");
+    document.querySelector("#checkout").classList.add("checkout");
+    document.querySelector("#confirmacion").classList.add("hidden");
+    document.querySelector("#confirmacion").classList.remove("confirmacion");
+    document.querySelector("#html-spinner").classList.remove("rotate");
+}
+
+const btnConfirmar = document.getElementById("confirmar");
+btnConfirmar.addEventListener("click", confirmar);
+function confirmar() {
+    document.querySelector("#html-spinner").classList.remove("color");
+    document.querySelector("#html-spinner").classList.add("rotate");
+    setTimeout(fireAnimation, 5000);
+}
+
+function fireAnimation() {
+    document.getElementById("html-spinner").addEventListener("animationiteration", color);
+}
+function color() {
+    document.querySelector("#html-spinner").classList.remove("rotate");
+    document.querySelector("#html-spinner").classList.add("color");
+    document.getElementById("html-spinner").addEventListener("animationend", check);
+}
+function check() {
+    document.querySelector("#spinner-container").hidden = true;
+    document.querySelector("#checkmark-container").hidden = false;
+    document.getElementById("html-spinner").removeEventListener("animationiteration", color);
+    document.getElementById("html-spinner").removeEventListener("animationend", check);
+    document.getElementById("msjConfirmacion").hidden = false;
+    document.getElementById("btnsConfirmacion").hidden = true;
+    document.getElementById("cerrarConfirmacion").hidden = false;
+}
+
+document.getElementById("cerrarConfirmacion").addEventListener("click", ()=>{
+    volver();
+    cancelar();
+})
 
 /* -------------------------------------------------------------------------- */
 /*                                   onload                                   */
@@ -928,4 +1005,9 @@ document.querySelector("#signUp").hidden = true;
 document.querySelector("#stats").hidden = true;
 document.querySelector("#tienda").hidden = true;
 document.querySelector("#carrito-container").hidden = true;
+document.querySelector("#confirmacion").classList.add("hidden");
+document.querySelector("#checkout-container").classList.add("hidden");
+document.querySelector("#checkmark-container").hidden = true;
+document.querySelector("#spinner-container").hidden = true;
+
 autoLogIn();
