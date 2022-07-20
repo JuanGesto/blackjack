@@ -19,62 +19,63 @@
         <!-- ----------------------------------------------------------------------- -->
         <!--                                  menu                                   -->
         <!-- ----------------------------------------------------------------------- -->
+        <div id="menu-container">
+            <div id="menu">
+                <button id="user" class="boton"></button>
 
-        <div id="menu">
-            <button id="user" class="boton"></button>
+                <button id="abrirRecompensa" class="boton"></button>
+                <div id="tooltipRecompensa" class="tooltips" role="tooltip">Recompensa disponible
+                    <div id="arrow" class="arrow" data-popper-arrow></div>
+                </div>
+                <div id="tooltipRecompensa2" class="tooltips" role="tooltip">!!!
+                    <div id="arrow" class="arrow" data-popper-arrow></div>
+                </div>
+                <button id="abrirReglas" class="boton"></button>
+                <button id="musica" class="boton"></button>
 
-            <button id="abrirRecompensa" class="boton"></button>
-            <div id="tooltipRecompensa" class="tooltips" role="tooltip">Recompensa disponible
-                <div id="arrow" class="arrow" data-popper-arrow></div>
+                <button id="btnTienda" class="boton"></button>
             </div>
-            <div id="tooltipRecompensa2" class="tooltips" role="tooltip">!!!
-                <div id="arrow" class="arrow" data-popper-arrow></div>
-            </div>
-            <button id="abrirReglas" class="boton"></button>
-            <button id="musica" class="boton"></button>
-
-            <button id="btnTienda" class="boton"></button>
         </div>
 
         <!-- ----------------------------------------------------------------------- -->
         <!--                                  juego                                  -->
         <!-- ----------------------------------------------------------------------- -->
+        <div id="juego">
+            <h1>Blackjack</h1>
+            <div id="contenido">
+                <h3>Casa: <span id="puntos-casa"></span></h3>
+                <div id="cartas-casa"></div>
 
-        <h1>Blackjack</h1>
-        <div id="contenido">
-            <h3>Casa: <span id="puntos-casa"></span></h3>
-            <div id="cartas-casa">
+                <h3>Jugador: <span id="puntos-jugador"></span></h3>
+                <div id="cartas-jugador"></div>
             </div>
 
-            <h3>Jugador: <span id="puntos-jugador"></span></h3>
-            <div id="cartas-jugador"></div>
+            <div id="clickable">
+                <div id="botones">
+                    <button id="parar"> Parar </button>
+                    <button id="pedir"> Pedir </button>
+                    <button id="apostar">Apostar</button>
+                </div>
+
+                <div id="slidercontainer">
+                    <input type="range" min="1" max="1000" value="100" step="1" class="slider" id="myRange">
+                </div>
+
+                <div id="dinero">
+                    <h4>Apuesta: <span id="apuesta"></span></h4>
+                    <h4>Balance: <span id="balance"></span></h4>
+                </div>
+
+                <div id="final">
+                    <button id="volverAJugar">Volver a jugar</button>
+                </div>
+            </div>
         </div>
-
-        <div id="clickable">
-            <div id="botones">
-                <button id="parar"> Parar </button>
-                <button id="pedir"> Pedir </button>
-                <button id="apostar">Apostar</button>
-            </div>
-
-            <div id="slidercontainer">
-                <input type="range" min="1" max="1000" value="100" step="1" class="slider" id="myRange">
-            </div>
-
-            <div id="dinero">
-                <h4>Apuesta: <span id="apuesta"></span></h4>
-                <h4>Balance: <span id="balance"></span></h4>
-            </div>
-
-            <div id="final">
-                <button id="volverAJugar">Volver a jugar</button>
-            </div>
-        </div>
-
         <div id="carteles">
             <div id="hagaApuesta" role="tooltip">Haga su apuesta</div>
             <div id="resultado" role="tooltip">¡Usted gana!</h2>
             </div>
+        </div>
 
     </main>
 
@@ -240,7 +241,7 @@
         <div id="confirmacion">
             <p>¿Desea confirmar su compra por un total de $<span id="monto"></span>?</p>
             <div id="checkmark-container">
-                <div class="success-checkmark">
+                <div id="result">
                     <div class="check-icon">
                         <span class="icon-line line-tip"></span>
                         <span class="icon-line line-long"></span>

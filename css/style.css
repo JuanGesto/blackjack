@@ -7,9 +7,10 @@
 body {
   font-family: "Lora", serif;
   text-align: center;
-  background-color: #0D5428;
-  background-image: url(../media/table.jpg);
+  background-color: #0E391E;
+  background-image: url(../media/bg-landscape.svg);
   background-size: cover;
+  background-repeat: no-repeat;
   color: aliceblue;
 }
 
@@ -396,8 +397,8 @@ h4 {
   -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
   -moz-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
   -o-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 .input {
@@ -569,8 +570,8 @@ h4 {
   -webkit-box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.5607843137), 5px -5px 10px rgba(0, 0, 0, 0);
   -moz-box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.5607843137), 5px -5px 10px rgba(0, 0, 0, 0);
   -o-box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.5607843137), 5px -5px 10px rgba(0, 0, 0, 0);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 #tienda h2 {
   margin: 15% auto 10%;
@@ -603,7 +604,7 @@ h4 {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(7, 136, 54, 0.1921568627);
+  background: #0e331d;
   border-radius: 50% 50% 50% 50%/3% 3% 3% 3%;
 }
 
@@ -729,13 +730,13 @@ h4 {
   height: 50%;
   border-radius: 1%;
   padding: 2%;
-  background-color: rgba(10, 65, 30, 0.8705882353);
+  background-color: #123d22;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
   -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
   -moz-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
   -o-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(20px);
 }
 .checkout h2 {
   margin-bottom: 5%;
@@ -815,13 +816,13 @@ h4 {
   height: fit-content;
   border-radius: 1%;
   padding: 2%;
-  background-color: rgba(10, 65, 30, 0.8705882353);
+  background-color: #123d22;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
   -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
   -moz-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
   -o-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 #btnsConfirmacion {
@@ -1197,6 +1198,77 @@ h4 {
     transform: rotate(360deg);
     border-color: #0a7c36;
     height: 80px;
+  }
+}
+.fail-cross {
+  width: 88px;
+  height: 88px;
+  margin: 0 auto;
+}
+.fail-cross .check-icon {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  border-radius: 50%;
+  box-sizing: content-box;
+  border: 4px solid #ee0808;
+}
+.fail-cross .check-icon .icon-line {
+  height: 5px;
+  background-color: #ee0808;
+  display: block;
+  border-radius: 2px;
+  position: absolute;
+  z-index: 10;
+}
+.fail-cross .check-icon .icon-line.line-tip {
+  top: 38px;
+  left: 17px;
+  width: 47px;
+  transform: rotate(45deg);
+  animation: icon-line-one 0.75s;
+}
+.fail-cross .check-icon .icon-line.line-long {
+  top: 38px;
+  right: 17px;
+  width: 47px;
+  transform: rotate(-45deg);
+  animation: icon-line-two 0.75s;
+}
+.fail-cross .check-icon .icon-circle {
+  top: -4px;
+  left: -4px;
+  z-index: 10;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  position: absolute;
+  box-sizing: content-box;
+  border: 4px solid #ee0808;
+}
+
+@keyframes icon-line-one {
+  0% {
+    width: 0;
+    left: 5px;
+    top: 10px;
+  }
+  100% {
+    top: 38px;
+    left: 17px;
+    width: 47px;
+  }
+}
+@keyframes icon-line-two {
+  0% {
+    width: 0;
+    right: 5px;
+    top: 10px;
+  }
+  100% {
+    top: 38px;
+    right: 17px;
+    width: 47px;
   }
 }
 

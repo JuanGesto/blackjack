@@ -58,7 +58,6 @@ function getValor(carta) {
 }
 
 function repartirJugador() {
-    console.log("empieza")
     carta = mazo.shift();
     puntosJugador += getValor(carta);
 
@@ -78,7 +77,6 @@ function repartirJugador() {
     cartaImg.onload = () => {
         document.getElementById("puntos-jugador").innerText = puntosJugador;
     }
-    console.log("termina")
 }
 
 function repartirCasa() {
@@ -136,7 +134,7 @@ btnApostar.addEventListener("click", apostar);
 
 function apostar() {
     btnPedir.setAttribute("disabled", true);
-    btnParar.setAttribute("disabled",true);
+    btnParar.setAttribute("disabled", true);
     document.querySelector("#slidercontainer").hidden = true;
     document.querySelector("#apostar").hidden = true;
     document.querySelector("#parar").hidden = false;
@@ -327,7 +325,7 @@ function volverAJugar() {
     while (cartasC.length !== 0) {
         cartasC[0].remove();
     }
-    
+
 
     puntosCasa = 0;
     puntosJugador = 0;
@@ -428,6 +426,7 @@ function recompensa() {
             document.querySelector("#disponible").hidden = true;
             tooltipRecompensa2.removeAttribute("data-show");
         }
+        ayer = dia;
         loggedUserStats["ayer"] = dia;
         updateStats();
         if (loggedUserStats["reclamar"] != 1 & balance === 0) {
@@ -536,7 +535,7 @@ function signUpCheck() {
         signUp(NOAccounts);
     }
 }
-const newUser = [];
+let newUser = [];
 
 function signUp(userID) {
 
@@ -570,6 +569,7 @@ function newAccount(userID) {
         reclamar: 0,
     })
     localStorage.setItem("user" + userID, JSON.stringify(newUser));
+    newUser = [];
 }
 
 /* -------------------------------------------------------------------------- */
@@ -673,20 +673,17 @@ function addBlackjack() {
         document.getElementById("blackjacks").innerHTML = loggedUserStats["blackjacks"];
     }
 }
-
 function rachaMas() {
     if (loggedUserStats != undefined) {
         rachaActual += 1;
     }
     addRacha();
 }
-
 function racha0() {
     if (loggedUserStats != undefined) {
         rachaActual = 0;
     }
 }
-
 function addRacha() {
     if (loggedUserStats != undefined) {
         if (rachaActual > loggedUserStats["racha"]) {
@@ -696,7 +693,6 @@ function addRacha() {
         }
     }
 }
-
 function addVictoria() {
     if (loggedUserStats != undefined) {
         loggedUserStats["victorias"] += 1;
@@ -704,7 +700,6 @@ function addVictoria() {
         document.getElementById("victorias").innerHTML = loggedUserStats["victorias"];
     }
 }
-
 function addDerrota() {
     if (loggedUserStats != undefined) {
         loggedUserStats["derrotas"] += 1;
@@ -712,7 +707,6 @@ function addDerrota() {
         document.getElementById("derrotas").innerHTML = loggedUserStats["derrotas"];
     }
 }
-
 function addEmpate() {
     if (loggedUserStats != undefined) {
         loggedUserStats["empates"] += 1;
@@ -720,7 +714,6 @@ function addEmpate() {
         document.getElementById("empates").innerHTML = loggedUserStats["empates"];
     }
 }
-
 function addRecord() {
     if (loggedUserStats != undefined) {
         if (balance > loggedUserStats["record"]) {
@@ -730,7 +723,6 @@ function addRecord() {
         }
     }
 }
-
 function updateBalance() {
     if (loggedUserStats != undefined) {
         loggedUserStats["balance"] = balance;
@@ -740,7 +732,6 @@ function updateBalance() {
     }
     document.getElementById("balance").innerText = balance;
 }
-
 function updateStats() {
     userData.pop();
     userData.push(loggedUserStats);
@@ -756,12 +747,15 @@ btnUser.addEventListener("click", abrirPanel);
 
 function abrirPanel() {
     document.querySelector("#sidepanel").hidden = false;
+    document.querySelector("#menu-container").hidden = true;
 }
+
 let btnCerrarPanel = document.getElementById("cerrarPanel")
 btnCerrarPanel.addEventListener("click", cerrarPanel)
 
 function cerrarPanel() {
     document.querySelector("#sidepanel").hidden = true;
+    document.querySelector("#menu-container").hidden = false;
 }
 
 let btnLogOf = document.getElementById("logOf");
@@ -797,7 +791,6 @@ let btnmas;
 let input;
 let stock;
 let outOfStock;
-let carrito = [];
 fetch("./js/stock.json")
     .then((response) => response.json())
     .then((stock) => {
@@ -812,13 +805,13 @@ fetch("./js/stock.json")
             <button id="mas${stock.id}" class="btnCantidad">+</button>`
 
             listaProductos.append(liCatalogo);
-            carrito.push(`{${stock.id}, 0}`);
+            
+            btnmenos = "#menos" + `${stock.id}`;
+            btnmas = "#mas" + `${stock.id}`;
+            input = "#input" + `${stock.id}`;
+            outOfStock = "outOfStock" + `${stock.id}`;
+            stock = `${stock.stock}`;
 
-            btnmenos = "#menos"+`${stock.id}`;
-            btnmas = "#mas"+`${stock.id}`;
-            input = "#input"+`${stock.id}`;
-            outOfStock = "outOfStock"+`${stock.id}`;
-                        stock = `${stock.stock}`;
             incdec(btnmenos, btnmas, input, stock);
             if (stock < 1) {
                 const agotado = document.createElement("p");
@@ -826,43 +819,39 @@ fetch("./js/stock.json")
                 agotado.classList.add("noStock");
                 document.getElementById(outOfStock).append(agotado);
             }
-            
-            
         });
     });
-
-    
 
 function incdec(btnmenos, btnmas, input, stock) {
     document.querySelector(btnmenos).addEventListener("click", () => {
         const el = document.querySelector(input);
         if (parseInt(el.value) > 0) {
-        el.value = parseInt(el.value) -1;
-
+            el.value = parseInt(el.value) - 1;
         }
     })
-
     document.querySelector(btnmas).addEventListener("click", () => {
         const el = document.querySelector(input);
         if (parseInt(el.value) < stock) {
-        el.value = parseInt(el.value) +1;
+            el.value = parseInt(el.value) + 1;
         }
     })
 }
+
 let carritoTotal = 0;
 let subtotal;
 const btnComprar = document.getElementById("comprar");
 btnComprar.addEventListener("click", comprar);
+
 function comprar() {
     document.querySelector("#catalogo").hidden = true;
     document.querySelector("#carrito-container").hidden = false;
 
     const listaCarrito = document.querySelector("#listaCarrito");
     fetch("./js/stock.json")
-    .then((response) => response.json())
-    .then((stock) => {
+        .then((response) => response.json())
+        .then((stock) => {
             stock.forEach(stock => {
-                const inputValue = document.getElementById("input"+`${stock.id}`);
+                const inputValue = document.getElementById("input" + `${stock.id}`);
 
                 if (inputValue.value > 0) {
                     const liCarrito = document.createElement("li");
@@ -888,15 +877,12 @@ function comprar() {
             } else {
                 document.querySelector("#continuar").removeAttribute("disabled");
             }
-    });
-
-    function armarCarrito() {
-        localStorage.setItem("carrito", JSON.stringify(carrito));
-    }
+        });
 }
 
 const btnCerrarCarrito = document.getElementById("cerrarCarrito");
 btnCerrarCarrito.addEventListener("click", cerrarCarrito);
+
 function cerrarCarrito() {
     document.querySelector("#catalogo").hidden = false;
     document.querySelector("#carrito-container").hidden = true;
@@ -908,10 +894,11 @@ function cerrarCarrito() {
         border.parentElement.removeChild(border);
     }
     carritoTotal = 0;
-    }
+}
 
 const btnContinuar = document.getElementById("continuar");
 btnContinuar.addEventListener("click", continuar);
+
 function continuar() {
     document.querySelector("#checkout-container").classList.add("checkout-container");
     document.querySelector("#checkout-container").classList.remove("hidden");
@@ -919,6 +906,7 @@ function continuar() {
 
 const btnCancelar = document.getElementById("cancelar");
 btnCancelar.addEventListener("click", cancelar);
+
 function cancelar() {
     document.querySelector("#checkout-container").classList.add("hidden");
     document.querySelector("#checkout-container").classList.remove("checkout-container");
@@ -926,6 +914,7 @@ function cancelar() {
 
 const form = document.getElementById("form");
 form.addEventListener("submit", pagar);
+
 function pagar() {
     document.querySelector("#confirmacion").classList.remove("hidden");
     document.querySelector("#confirmacion").classList.add("confirmacion");
@@ -938,18 +927,25 @@ function pagar() {
     document.getElementById("btnsConfirmacion").hidden = false;
     document.getElementById("cerrarConfirmacion").hidden = true;
     document.querySelector("#html-spinner").classList.remove("color");
+    btnVolver.removeAttribute("disabled");
+    btnConfirmar.removeAttribute("disabled");
 }
 
 const btnPagar = document.getElementById("pagar");
 btnPagar.addEventListener("click", preventDefault);
+
 function preventDefault() {
     const form = document.getElementById("form");
-    function handleForm(event) { event.preventDefault(); } 
+
+    function handleForm(event) {
+        event.preventDefault();
+    }
     form.addEventListener('submit', handleForm);
 }
 
 const btnVolver = document.getElementById("volver");
 btnVolver.addEventListener("click", volver);
+
 function volver() {
     document.querySelector("#confirmacion").hidden = true;
     document.querySelector("#checkout").classList.remove("hidden");
@@ -961,20 +957,37 @@ function volver() {
 
 const btnConfirmar = document.getElementById("confirmar");
 btnConfirmar.addEventListener("click", confirmar);
+
 function confirmar() {
     document.querySelector("#html-spinner").classList.remove("color");
     document.querySelector("#html-spinner").classList.add("rotate");
-    setTimeout(fireAnimation, 5000);
+    btnVolver.setAttribute("disabled", true);
+    btnConfirmar.setAttribute("disabled", true);
+    verifyData().then(() => {
+        document.querySelector("#result").classList.remove("fail-cross");
+        document.querySelector("#result").classList.add("success-checkmark");
+        fireAnimation();
+    }).catch(() => {
+        document.querySelector("#result").classList.remove("success-checkmark");
+        document.querySelector("#result").classList.add("fail-cross");
+        document.querySelector("#spinner-container").hidden = true;
+        document.querySelector("#checkmark-container").hidden = false;
+        btnVolver.removeAttribute("disabled");
+    })
+    
+    res = Math.floor(Math.random()*10);
 }
 
 function fireAnimation() {
     document.getElementById("html-spinner").addEventListener("animationiteration", color);
 }
+
 function color() {
     document.querySelector("#html-spinner").classList.remove("rotate");
     document.querySelector("#html-spinner").classList.add("color");
     document.getElementById("html-spinner").addEventListener("animationend", check);
 }
+
 function check() {
     document.querySelector("#spinner-container").hidden = true;
     document.querySelector("#checkmark-container").hidden = false;
@@ -985,18 +998,28 @@ function check() {
     document.getElementById("cerrarConfirmacion").hidden = false;
 }
 
-document.getElementById("cerrarConfirmacion").addEventListener("click", ()=>{
+document.getElementById("cerrarConfirmacion").addEventListener("click", () => {
     volver();
     cancelar();
 })
+let verified;
+const verifyData = () => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (res != 1) {
+                resolve()
+            } else {
+                reject()
+            }
+        }, 5000)
+    })
+}
 
 /* -------------------------------------------------------------------------- */
 /*                                   onload                                   */
 /* -------------------------------------------------------------------------- */
 
 btnReclamar.setAttribute("disabled", true);
-volverAJugar();
-range();
 document.querySelector("#ventana-reglas").hidden = true;
 document.querySelector("#ventana-recompensa").hidden = true;
 document.querySelector("#sidepanel").hidden = true;
@@ -1009,5 +1032,7 @@ document.querySelector("#confirmacion").classList.add("hidden");
 document.querySelector("#checkout-container").classList.add("hidden");
 document.querySelector("#checkmark-container").hidden = true;
 document.querySelector("#spinner-container").hidden = true;
-
+volverAJugar();
+range();
 autoLogIn();
+play();
