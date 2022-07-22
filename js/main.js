@@ -514,7 +514,8 @@ signUpSubmit.addEventListener("click", signUpCheck)
 let signUpName;
 let signUpPassword;
 
-function signUpCheck() {
+//Comprueba que los datos sean validos
+function signUpCheck(e) {
     let taken = false;
     signUpName = document.getElementById("signUpName").value;
     signUpPassword = document.getElementById("signUpPassword").value;
@@ -534,11 +535,13 @@ function signUpCheck() {
         document.getElementById("invalid").innerHTML = "";
         signUp(NOAccounts);
     }
+    e.preventDefault();
+    e.preventPropagation();
 }
 let newUser = [];
 
+//Crea la cuenta
 function signUp(userID) {
-
     newUser.push({
         username: signUpName,
         password: signUpPassword
@@ -591,7 +594,7 @@ logInSubmit.addEventListener("click", logIn);
 let logInName;
 let logInPassword;
 
-function logIn() {
+function logIn(e) {
     logInName = document.getElementById("logInName");
     logInPassword = document.getElementById("logInPassword");
     for (let i = 0; i < NOAccounts; i++) {
@@ -646,6 +649,8 @@ function logIn() {
             document.getElementById("wrong").innerHTML = "Este usuario no existe";
         }
     }
+    e.preventDefault();
+    e.stopPropagation();
 }
 
 logInName = document.getElementById("logInName");
@@ -785,6 +790,7 @@ function cerrarTienda() {
     document.querySelector("#tienda").hidden = true;
 }
 
+//Crea la tienda
 const listaProductos = document.querySelector("#productos");
 let btnmenos;
 let btnmas;
@@ -805,7 +811,7 @@ fetch("./js/stock.json")
             <button id="mas${stock.id}" class="btnCantidad">+</button>`
 
             listaProductos.append(liCatalogo);
-            
+
             btnmenos = "#menos" + `${stock.id}`;
             btnmas = "#mas" + `${stock.id}`;
             input = "#input" + `${stock.id}`;
@@ -841,7 +847,7 @@ let carritoTotal = 0;
 let subtotal;
 const btnComprar = document.getElementById("comprar");
 btnComprar.addEventListener("click", comprar);
-
+//Crea el carrito
 function comprar() {
     document.querySelector("#catalogo").hidden = true;
     document.querySelector("#carrito-container").hidden = false;
@@ -902,14 +908,18 @@ btnContinuar.addEventListener("click", continuar);
 function continuar() {
     document.querySelector("#checkout-container").classList.add("checkout-container");
     document.querySelector("#checkout-container").classList.remove("hidden");
+    document.querySelector("#continuar").setAttribute("disabled", true);
+    document.querySelector("#cerrarCarrito").setAttribute("disabled", true);
 }
-
+//Ventana metodo de pago
 const btnCancelar = document.getElementById("cancelar");
 btnCancelar.addEventListener("click", cancelar);
 
 function cancelar() {
     document.querySelector("#checkout-container").classList.add("hidden");
     document.querySelector("#checkout-container").classList.remove("checkout-container");
+    document.querySelector("#continuar").removeAttribute("disabled");
+    document.querySelector("#cerrarCarrito").removeAttribute("disabled");
 }
 
 const form = document.getElementById("form");
@@ -974,10 +984,11 @@ function confirmar() {
         document.querySelector("#checkmark-container").hidden = false;
         btnVolver.removeAttribute("disabled");
     })
-    
-    res = Math.floor(Math.random()*10);
+
+    res = Math.floor(Math.random() * 10);   //da un 10% de probabilidades de que se rechaze la transacción para agregar variedad a la simulación
 }
 
+//maneja animaciones de confirmacion o rechazo
 function fireAnimation() {
     document.getElementById("html-spinner").addEventListener("animationiteration", color);
 }
@@ -1001,6 +1012,16 @@ function check() {
 document.getElementById("cerrarConfirmacion").addEventListener("click", () => {
     volver();
     cancelar();
+    cerrarCarrito();
+    cerrarTienda();
+    var items = document.querySelectorAll('.cantidad');
+    let item = 0;
+    items.forEach(function () {
+        items[item].value = 0;
+        item++
+    });
+    document.querySelector("#continuar").removeAttribute("disabled");
+    document.querySelector("#cerrarCarrito").removeAttribute("disabled");
 })
 let verified;
 const verifyData = () => {

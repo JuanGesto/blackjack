@@ -148,13 +148,15 @@
             <div class="cuenta">
                 <h2>Inicia sesión</h2>
                 <p id="wrong"></p>
-                <input type="text" placeholder="Nombre de usuario" id="logInName" class="input">
-                <input type="password" placeholder="Contraseña" id="logInPassword" class="input">
-                <input type="submit" id="logInSubmit" class="submit" value="Iniciar sesión">
-                <div id="recordarme">
-                    <input type="checkbox" id="btnCheck" value="Guardar" class="check">
-                    <label for="btnCheck">Recordarme</label>
-                </div>
+                <form>
+                    <input type="text" placeholder="Nombre de usuario" id="logInName" class="input">
+                    <input type="password" placeholder="Contraseña" id="logInPassword" class="input">
+                    <input type="submit" id="logInSubmit" class="submit" value="Iniciar sesión">
+                    <div id="recordarme">
+                        <input type="checkbox" id="btnCheck" value="Guardar" class="check">
+                        <label for="btnCheck">Recordarme</label>
+                    </div>
+                </form>
                 <p>¿No tenés una cuenta?</p>
                 <p id="registrate">Registrate.</p>
             </div>
@@ -163,9 +165,11 @@
             <div class="cuenta">
                 <h2>Crea una cuenta</h2>
                 <p id="invalid"></p>
-                <input type="text" placeholder="Nombre de usuario" id="signUpName" minlength="4" class="input">
-                <input type="password" placeholder="Contraseña" id="signUpPassword" minlength="4" class="input">
-                <input type="submit" id="signUpSubmit" class="submit" value="Registrarse">
+                <form>
+                    <input type="text" placeholder="Nombre de usuario" id="signUpName" minlength="4" class="input">
+                    <input type="password" placeholder="Contraseña" id="signUpPassword" minlength="4" class="input">
+                    <input type="submit" id="signUpSubmit" class="submit" value="Registrarse">
+                </form>
                 <p>¿Ya tenés una cuenta?</p>
                 <p id="inicia">Iniciá sesión.</p>
             </div>
@@ -231,7 +235,7 @@
                     <label class="pais">País<input type="text" class="input" required /></label>
                     <label class="telefono">Número de teléfono<input type="number" class="input" required /></label>
                     <div id="btnsCheckout">
-                        <button id="cancelar" class="submit">Cancelar</button>
+                        <button type="button" id="cancelar" class="submit">Cancelar</button>
                         <input type="submit" id="pagar" class="submit" value="Pagar" />
                     </div>
                 </form>
