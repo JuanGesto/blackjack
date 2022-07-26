@@ -107,7 +107,7 @@
     margin: 0.5%;
 }
 
-#resultado, #hagaApuesta {
+#cartel {
     width: 50%;
     font-size: 1.3em;
     position: absolute;
@@ -118,7 +118,7 @@
     animation-fill-mode: forwards;
 }
 
-#resultado[data-show], #hagaApuesta[data-show] {
+#cartel[data-show] {
     animation: appear 0.5s;
     animation-fill-mode: forwards;
 }

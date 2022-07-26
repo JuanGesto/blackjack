@@ -132,7 +132,7 @@ h4 {
   margin: 0.5%;
 }
 
-#resultado, #hagaApuesta {
+#cartel {
   width: 50%;
   font-size: 1.3em;
   position: absolute;
@@ -143,7 +143,7 @@ h4 {
   animation-fill-mode: forwards;
 }
 
-#resultado[data-show], #hagaApuesta[data-show] {
+#cartel[data-show] {
   animation: appear 0.5s;
   animation-fill-mode: forwards;
 }
@@ -344,46 +344,49 @@ h4 {
   animation-iteration-count: infinite;
 }
 
-#arrow,
-#arrow::before {
+.arrow,
+.arrow::before {
   position: absolute;
   width: 8px;
   height: 8px;
   background: inherit;
 }
 
-#arrow {
+.arrow {
   visibility: hidden;
 }
 
-#arrow::before {
+.arrow::before {
   visibility: visible;
   content: "";
   transform: rotate(45deg);
-  position: absolute;
   left: 0px;
-}
-
-.tooltips[data-popper-placement^=bottom] > #arrow {
-  top: -4px;
 }
 
 .tooltips[data-popper-placement^=right] > #arrow {
   left: -4px;
 }
 
-.tooltips[data-popper-placement^=top] > #arrow {
-  bottom: -4px;
-}
-
 @keyframes bounce {
+  0% {
+    transform: translate(42px, 35px);
+  }
   50% {
     transform: translate(50px, 35px);
   }
+  100% {
+    transform: translate(42px, 35px);
+  }
 }
 @keyframes bounce2 {
+  0% {
+    transform: translate(42px, 44px);
+  }
   50% {
     transform: translate(50px, 44px);
+  }
+  100% {
+    transform: translate(42px, 44px);
   }
 }
 #sidepanel {

@@ -114,8 +114,6 @@ function range() {
             slider.value -= 1;
         }
         apuesta.innerText = this.value;
-        e.preventDefault();
-        e.stopPropagation();
     })
 
     slider.oninput = function () {
@@ -140,7 +138,7 @@ function apostar() {
     document.querySelector("#parar").hidden = false;
     document.querySelector("#pedir").hidden = false;
     document.querySelector("#contenido").hidden = false;
-    document.querySelector("#hagaApuesta").removeAttribute("data-show");
+    document.querySelector("#cartel").removeAttribute("data-show");
     apuesta = slider.value;
     balance -= apuesta
     updateBalance();
@@ -254,7 +252,7 @@ let blackjackCasa;
 let balance0 = false;
 
 function resultado() {
-    cartelResultado = document.getElementById("resultado");
+    cartelResultado = document.getElementById("cartel");
     cartasJugador = document.getElementsByClassName("cartaJ");
     cartasCasa = document.getElementsByClassName("cartaC");
     blackjackJugador = false;
@@ -301,7 +299,7 @@ function resultado() {
     max.setAttribute("max", balance);
     apuesta.innerHTML = slider.value;
 
-    document.querySelector("#resultado").setAttribute("data-show", "");
+    document.querySelector("#cartel").setAttribute("data-show", "");
 
     addRecord();
     recompensa();
@@ -315,7 +313,7 @@ let btnVolverAJugar = document.getElementById("volverAJugar");
 btnVolverAJugar.addEventListener("click", volverAJugar);
 
 function volverAJugar() {
-    recompensa();
+    setTimeout(recompensa, 1000);
 
     cartasJ = document.getElementsByClassName("cartaJ");
     cartasC = document.getElementsByClassName("cartaC");
@@ -338,8 +336,9 @@ function volverAJugar() {
     document.querySelector("#parar").hidden = true;
     document.querySelector("#pedir").hidden = true;
     document.querySelector("#contenido").hidden = true;
-    document.querySelector("#hagaApuesta").setAttribute("data-show", "");
-    document.querySelector("#resultado").removeAttribute("data-show");
+    document.querySelector("#cartel").removeAttribute("data-show");
+    document.querySelector("#cartel").innerHTML = "Haga su apuesta";
+    document.querySelector("#cartel").setAttribute("data-show", "");
 
     armarMazo();
     mezclarMazo();
@@ -379,6 +378,28 @@ function cerrarRecompensa() {
 }
 let btnReclamar = document.getElementById("reclamar");
 btnReclamar.addEventListener("click", reclamar);
+
+//Creo tooltips
+const tooltipRecompensa = document.getElementById("tooltipRecompensa");
+const popperRecompensa = Popper.createPopper(btnAbrirRecompensa, tooltipRecompensa, {
+    placement: "right",
+    modifiers: [{
+        name: "offset",
+        options: {
+            offset: [0, 8],
+        },
+    }, ],
+});
+const tooltipRecompensa2 = document.getElementById("tooltipRecompensa2");
+const popperRecompensa2 = Popper.createPopper(btnAbrirRecompensa, tooltipRecompensa2, {
+    placement: "right",
+    modifiers: [{
+        name: "offset",
+        options: {
+            offset: [0, 8],
+        },
+    }, ],
+});
 
 function reclamar() {
     balance += 1000;
@@ -438,28 +459,6 @@ function recompensa() {
         popperRecompensa2.update();
     }
 }
-
-const tooltipRecompensa = document.getElementById("tooltipRecompensa");
-const popperRecompensa = Popper.createPopper(btnAbrirRecompensa, tooltipRecompensa, {
-    placement: "right",
-    modifiers: [{
-        name: "offset",
-        options: {
-            offset: [0, 8],
-        },
-    }, ],
-});
-
-const tooltipRecompensa2 = document.getElementById("tooltipRecompensa2");
-const popperRecompensa2 = Popper.createPopper(btnAbrirRecompensa, tooltipRecompensa2, {
-    placement: "right",
-    modifiers: [{
-        name: "offset",
-        options: {
-            offset: [0, 8],
-        },
-    }, ],
-});
 
 /* -------------------------------------------------------------------------- */
 /*                                   Reglas                                   */
@@ -535,8 +534,7 @@ function signUpCheck(e) {
         document.getElementById("invalid").innerHTML = "";
         signUp(NOAccounts);
     }
-    e.preventDefault();
-    e.preventPropagation();
+    preventDefault("signupForm");
 }
 let newUser = [];
 
@@ -621,6 +619,9 @@ function logIn(e) {
                 ayer = parseInt(loggedUserStats["ayer"]);
 
                 let btnCheck = document.querySelector("#btnCheck");
+                if (localStorage.getItem("remember") === null) {
+                    localStorage.setItem("remember", "no");
+                }
                 if (localStorage.getItem("remember") === "no") {
                     if (btnCheck.checked === true) {
                         localStorage.setItem("remember", "yes");
@@ -649,8 +650,7 @@ function logIn(e) {
             document.getElementById("wrong").innerHTML = "Este usuario no existe";
         }
     }
-    e.preventDefault();
-    e.stopPropagation();
+    preventDefault("loginForm");
 }
 
 logInName = document.getElementById("logInName");
@@ -942,16 +942,7 @@ function pagar() {
 }
 
 const btnPagar = document.getElementById("pagar");
-btnPagar.addEventListener("click", preventDefault);
-
-function preventDefault() {
-    const form = document.getElementById("form");
-
-    function handleForm(event) {
-        event.preventDefault();
-    }
-    form.addEventListener('submit', handleForm);
-}
+btnPagar.addEventListener("click", ()=> {preventDefault("form")});
 
 const btnVolver = document.getElementById("volver");
 btnVolver.addEventListener("click", volver);
@@ -1056,4 +1047,13 @@ document.querySelector("#spinner-container").hidden = true;
 volverAJugar();
 range();
 autoLogIn();
-play();
+
+//Funcion que evita el reload del sitio al enviar cualquier formulario
+function preventDefault(formID) {
+    let form = document.getElementById(formID);
+
+    function handleForm(event) {
+        event.preventDefault();
+    }
+    form.addEventListener('submit', handleForm);
+}
