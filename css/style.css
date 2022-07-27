@@ -27,20 +27,29 @@ h4 {
   font-size: 1.3em;
 }
 
+#blackjack {
+  margin-top: 1%;
+  width: 18%;
+}
+
 #cartas-casa img,
 #cartas-jugador img {
-  width: 7%;
+  width: 6%;
   margin: 0.5%;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
 }
 
-#cartas-casa, #cartas-jugador {
-  height: 25vh;
+#cartas-casa,
+#cartas-jugador {
+  height: 22vh;
 }
 
-#pedir,
-#parar,
-#apostar {
+#clickable {
+  margin-bottom: 1%;
+}
+#clickable #pedir,
+#clickable #parar,
+#clickable #apostar {
   width: 7%;
   font-size: 1.3em;
   font-family: "Lora", serif;
@@ -53,9 +62,8 @@ h4 {
   -o-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
   margin-top: 5px;
 }
-
-#apostar {
-  margin-top: 27.5%;
+#clickable #apostar {
+  margin-top: 25.5%;
 }
 
 #volverAJugar {
@@ -137,8 +145,8 @@ h4 {
   font-size: 1.3em;
   position: absolute;
   left: 25%;
-  top: 25%;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8407738095) 25%, rgba(0, 0, 0, 0.8407738095) 75%, rgba(0, 0, 0, 0) 100%);
+  top: 35%;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgb(26, 26, 26) 25%, rgb(26, 26, 26) 75%, rgba(0, 0, 0, 0) 100%);
   animation: disappear 0.5s;
   animation-fill-mode: forwards;
 }
