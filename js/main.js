@@ -160,7 +160,7 @@ function jugar() {
 
         backImg = document.createElement("img");
         backImg.classList.add("back");
-        backImg.src = "./media/BACK.png";
+        backImg.src = "./media/BACK.webp";
         document.getElementById("cartas-casa").append(backImg);
 
         if (getValor(carta) == 11) {
@@ -637,9 +637,14 @@ function logIn(e) {
 
                 volverAJugar();
                 range();
-
+                
                 if (balance === 0) {
                     btnApostar.setAttribute("disabled", true);
+                    balance0 = true;
+                } else {
+                    balance0 = false;
+                    btnApostar.removeAttribute("disabled");
+                    tooltipRecompensa2.removeAttribute("data-show");
                 }
             } else {
                 document.getElementById("wrong").innerHTML = "Contraseña incorrecta";
