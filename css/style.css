@@ -14,17 +14,22 @@ body {
   color: aliceblue;
 }
 
-h1 {
-  margin-top: 1%;
-  font-size: 2.5em;
+h2 {
+  cursor: default;
 }
 
 h3 {
   font-size: 1.7em;
+  cursor: default;
 }
 
 h4 {
   font-size: 1.3em;
+  cursor: default;
+}
+
+p {
+  cursor: default;
 }
 
 #blackjack {
@@ -61,6 +66,7 @@ h4 {
   -moz-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
   -o-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
   margin-top: 5px;
+  cursor: pointer;
 }
 #clickable #apostar {
   margin-top: 25.5%;
@@ -77,6 +83,7 @@ h4 {
   -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
   -moz-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
   -o-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
+  cursor: pointer;
 }
 
 #pedir:hover,
@@ -130,6 +137,7 @@ h4 {
   -moz-box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5607843137), -2px -4px 8px rgba(0, 0, 0, 0);
   -o-box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5607843137), -2px -4px 8px rgba(0, 0, 0, 0);
   border-radius: 50%;
+  cursor: pointer;
 }
 .slider::-webkit-slider-thumb:hover, .slider::-webkit-slider-thumb:active {
   filter: brightness(110%);
@@ -149,6 +157,7 @@ h4 {
   background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgb(26, 26, 26) 25%, rgb(26, 26, 26) 75%, rgba(0, 0, 0, 0) 100%);
   animation: disappear 0.5s;
   animation-fill-mode: forwards;
+  cursor: default;
 }
 
 #cartel[data-show] {
@@ -236,6 +245,7 @@ h4 {
   -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
   -moz-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
   -o-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5607843137), -5px -5px 10px rgba(0, 0, 0, 0);
+  cursor: pointer;
 }
 
 .cerrar,
@@ -251,6 +261,7 @@ h4 {
   -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5607843137), -2px -2px 6px rgba(0, 0, 0, 0);
   -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5607843137), -2px -2px 6px rgba(0, 0, 0, 0);
   -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5607843137), -2px -2px 6px rgba(0, 0, 0, 0);
+  cursor: pointer;
 }
 .cerrar:hover,
 .boton:hover {
@@ -274,8 +285,7 @@ h4 {
   top: 20px;
   left: 20px;
 }
-
-.boton {
+#menu button {
   margin: 10%;
 }
 
@@ -440,6 +450,7 @@ h4 {
   -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5607843137), -2px -2px 6px rgba(0, 0, 0, 0);
   -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5607843137), -2px -2px 6px rgba(0, 0, 0, 0);
   -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5607843137), -2px -2px 6px rgba(0, 0, 0, 0);
+  cursor: pointer;
 }
 .submit:hover {
   filter: brightness(130%);
@@ -484,6 +495,10 @@ h4 {
 #recordarme {
   font-size: 0.9em;
   margin-bottom: 5%;
+}
+
+#registrate, #inicia {
+  cursor: pointer;
 }
 
 #cerrarPanel {
@@ -655,6 +670,7 @@ h4 {
   -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5607843137), -2px -2px 6px rgba(0, 0, 0, 0);
   -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5607843137), -2px -2px 6px rgba(0, 0, 0, 0);
   -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5607843137), -2px -2px 6px rgba(0, 0, 0, 0);
+  cursor: pointer;
 }
 .btnCantidad:hover {
   filter: brightness(130%);

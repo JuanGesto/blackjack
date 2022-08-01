@@ -412,10 +412,14 @@ function reclamar() {
     max.setAttribute("max", balance);
     tooltipRecompensa.removeAttribute("data-show");
     document.querySelector("#disponible").hidden = false;
+    balance0 = false;
 
-    if (balance === 1000 & balance0 === true) {
-        document.querySelector("#volverAJugar").hidden = false;
-        balance0 = false;
+    if (balance === 1000) {
+        slider.value = 100;
+        apuesta = slider.value;
+        if (btnApostar.hasAttribute("hidden") & btnPedir.hasAttribute("hidden")) {
+            document.querySelector("#volverAJugar").hidden = false;
+        }
     }
 }
 

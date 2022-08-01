@@ -41,6 +41,7 @@
     -webkit-box-shadow: 2px 2px 6px #0000008f, -2px -2px 6px #00000000;
     -moz-box-shadow: 2px 2px 6px #0000008f, -2px -2px 6px #00000000;
     -o-box-shadow: 2px 2px 6px #0000008f, -2px -2px 6px #00000000;
+    cursor: pointer;
     &:hover {
         filter: brightness(130%);
         transition: all 0.2s;
@@ -86,6 +87,10 @@
 #recordarme {
     font-size: 0.9em;
     margin-bottom: 5%;
+}
+
+#registrate, #inicia {
+    cursor: pointer;
 }
 
 #cerrarPanel {
